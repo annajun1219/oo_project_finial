@@ -1,11 +1,15 @@
 package com.example.oo_backend.service;
 
 import com.example.oo_backend.dto.SignupRequest;
+import com.example.oo_backend.dto.LoginRequest;
 import com.example.oo_backend.entity.User;
 import com.example.oo_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    // 회원가입
     public User register(SignupRequest request) {
         // 이메일 중복 검사
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -34,5 +39,22 @@ public class UserService {
         user.setBirth(request.getBirth());
 
         return userRepository.save(user);
+    }
+
+    // 로그인
+    public Map<String, Object> login(LoginRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이메일입니다."));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("userId", user.getUserId());
+        response.put("nickname", user.getName());
+        response.put("email", user.getEmail());
+
+        return response;
     }
 }

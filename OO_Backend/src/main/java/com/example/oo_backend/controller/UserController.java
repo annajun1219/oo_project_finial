@@ -1,9 +1,11 @@
 package com.example.oo_backend.controller;
 
 import com.example.oo_backend.dto.SignupRequest;
+import com.example.oo_backend.dto.LoginRequest;
 import com.example.oo_backend.entity.User;
 import com.example.oo_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,7 @@ public class UserController {
 
     private final UserService userService;
 
+    // 회원가입
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody SignupRequest request) {
         User user = userService.register(request);
@@ -29,5 +32,16 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
-}
 
+    // 로그인
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        try {
+            Map<String, Object> response = userService.login(request);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
+}

@@ -60,4 +60,3 @@ public class SignupRequest {
         this.birth = birth;
     }
 }
-
