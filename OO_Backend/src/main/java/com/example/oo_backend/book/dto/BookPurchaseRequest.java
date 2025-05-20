@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BookPurchaseRequest {
-    private Long buyerId;
     private Long productId;
     private int price;
     private String paymentMethod;

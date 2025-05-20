@@ -2,6 +2,7 @@ package com.example.oo_backend.book.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -16,7 +17,7 @@ public class BookTransaction {
     private Long id;
 
     // 구매자 ID
-    private Long buyerId;
+    private UUID buyerId;
 
     // 판매되는 교재 ID
     private Long productId;
@@ -36,3 +37,5 @@ public class BookTransaction {
     // 거래 상태 (예: "직거래 요청", "예약 중")
     private String status;
 }
+
+
