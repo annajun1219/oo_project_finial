@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8a1bbb2-d274-4f86-9c07-a00aa894cccf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/entity/Book.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/controller/BookController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/dto/BookRegisterRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/dto/BookRegisterResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/repository/BookRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/service/BookService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/service/BookServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/dto/BookPurchaseResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/dto/BookPurchaseResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/service/BookTransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/service/BookTransactionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/entity/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/entity/Book.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +70,9 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2x4vg4LAHwZ5dd2MnbbRpP4sN5G" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -124,7 +130,7 @@
       <updated>1747210267808</updated>
       <workItem from="1747210269120" duration="1405000" />
       <workItem from="1747385946923" duration="1097000" />
-      <workItem from="1747642207359" duration="10496000" />
+      <workItem from="1747642207359" duration="12118000" />
     </task>
     <servers />
   </component>

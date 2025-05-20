@@ -1,0 +1,15 @@
+package com.example.oo_backend.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class BookRegisterRequest {
+    private String title;
+    private String category;
+    private String professorName;
+    private int price;
+    private String description;
+}
+
