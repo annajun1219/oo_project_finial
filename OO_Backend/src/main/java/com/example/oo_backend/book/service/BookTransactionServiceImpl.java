@@ -1,9 +1,9 @@
-package com.example.oo_backend.service;
+package com.example.oo_backend.book.service;
 
-import com.example.oo_backend.dto.BookPurchaseRequest;
-import com.example.oo_backend.dto.BookPurchaseResponse;
-import com.example.oo_backend.entity.BookTransaction;
-import com.example.oo_backend.repository.BookTransactionRepository;
+import com.example.oo_backend.book.dto.BookPurchaseRequest;
+import com.example.oo_backend.book.dto.BookPurchaseResponse;
+import com.example.oo_backend.book.entity.BookTransaction;
+import com.example.oo_backend.book.repository.BookTransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

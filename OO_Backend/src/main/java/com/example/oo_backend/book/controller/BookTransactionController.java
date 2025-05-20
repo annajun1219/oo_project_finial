@@ -1,8 +1,8 @@
-package com.example.oo_backend.controller;
+package com.example.oo_backend.book.controller;
 
-import com.example.oo_backend.dto.BookPurchaseRequest;
-import com.example.oo_backend.dto.BookPurchaseResponse;
-import com.example.oo_backend.service.BookTransactionService;
+import com.example.oo_backend.book.dto.BookPurchaseRequest;
+import com.example.oo_backend.book.dto.BookPurchaseResponse;
+import com.example.oo_backend.book.service.BookTransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

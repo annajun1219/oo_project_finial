@@ -1,9 +1,9 @@
-package com.example.oo_backend.service;
+package com.example.oo_backend.user.service;
 
-import com.example.oo_backend.dto.SignupRequest;
-import com.example.oo_backend.dto.LoginRequest;
-import com.example.oo_backend.entity.User;
-import com.example.oo_backend.repository.UserRepository;
+import com.example.oo_backend.user.dto.SignupRequest;
+import com.example.oo_backend.user.dto.LoginRequest;
+import com.example.oo_backend.user.entity.User;
+import com.example.oo_backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

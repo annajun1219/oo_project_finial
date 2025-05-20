@@ -1,8 +1,8 @@
-package com.example.oo_backend.controller;
+package com.example.oo_backend.book.controller;
 
-import com.example.oo_backend.dto.BookRegisterRequest;
-import com.example.oo_backend.dto.BookRegisterResponse;
-import com.example.oo_backend.service.BookService;
+import com.example.oo_backend.book.dto.BookRegisterRequest;
+import com.example.oo_backend.book.dto.BookRegisterResponse;
+import com.example.oo_backend.book.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

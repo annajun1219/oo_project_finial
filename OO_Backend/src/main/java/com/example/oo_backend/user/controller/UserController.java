@@ -1,9 +1,9 @@
-package com.example.oo_backend.controller;
+package com.example.oo_backend.user.controller;
 
-import com.example.oo_backend.dto.SignupRequest;
-import com.example.oo_backend.dto.LoginRequest;
-import com.example.oo_backend.entity.User;
-import com.example.oo_backend.service.UserService;
+import com.example.oo_backend.user.dto.SignupRequest;
+import com.example.oo_backend.user.dto.LoginRequest;
+import com.example.oo_backend.user.entity.User;
+import com.example.oo_backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

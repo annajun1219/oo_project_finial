@@ -1,4 +1,4 @@
-package com.example.oo_backend.dto;
+package com.example.oo_backend.book.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

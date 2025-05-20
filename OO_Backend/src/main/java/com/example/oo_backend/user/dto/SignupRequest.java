@@ -1,4 +1,4 @@
-package com.example.oo_backend.dto;
+package com.example.oo_backend.user.dto;
 
 import java.time.LocalDate;
 
