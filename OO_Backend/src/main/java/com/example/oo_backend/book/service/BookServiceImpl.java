@@ -21,6 +21,7 @@ public class BookServiceImpl implements BookService {
                 .professorName(request.getProfessorName())
                 .price(request.getPrice())
                 .description(request.getDescription())
+                .sellerId(request.getSellerId())
                 .build();
 
         bookRepository.save(book);

@@ -2,6 +2,8 @@ package com.example.oo_backend.book.controller;
 
 import com.example.oo_backend.book.dto.BookPurchaseRequest;
 import com.example.oo_backend.book.dto.BookPurchaseResponse;
+import com.example.oo_backend.book.entity.Book;
+import com.example.oo_backend.book.entity.BookTransaction;
 import com.example.oo_backend.book.service.BookTransactionService;
 import com.example.oo_backend.user.entity.User;
 import com.example.oo_backend.user.repository.UserRepository;

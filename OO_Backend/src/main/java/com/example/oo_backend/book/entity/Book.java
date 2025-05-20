@@ -14,6 +14,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long sellerId;
 
     private String title;         // 교재명
     private String category;      // 카테고리
