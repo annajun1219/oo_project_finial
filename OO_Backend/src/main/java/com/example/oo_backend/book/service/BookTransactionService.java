@@ -6,5 +6,5 @@ import com.example.oo_backend.book.dto.BookPurchaseResponse;
 import java.util.UUID;
 
 public interface BookTransactionService {
-    BookPurchaseResponse createDirectTransaction(UUID buyerId, BookPurchaseRequest request);
+    BookPurchaseResponse createDirectTransaction(BookPurchaseRequest request);
 }
