@@ -17,14 +17,10 @@ public class BookTransaction {
 
     // 구매자 ID
     private Long buyerId;
-
-    // 판매자 ID (추가)
     private Long sellerId;
 
-    // 교재 ID
+    // 판매되는 교재 ID
     private Long productId;
-
-    // 교재 제목 (추가)
     private String productTitle;
 
     // 결제 금액
@@ -42,3 +38,5 @@ public class BookTransaction {
     // 거래 상태 (예: "직거래 요청", "예약 중")
     private String status;
 }
+
+

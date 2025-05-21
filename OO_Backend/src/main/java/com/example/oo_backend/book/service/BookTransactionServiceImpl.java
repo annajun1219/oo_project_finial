@@ -9,6 +9,7 @@ import com.example.oo_backend.book.repository.BookTransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 @Service
 @RequiredArgsConstructor
 public class BookTransactionServiceImpl implements BookTransactionService {
@@ -31,12 +32,10 @@ public class BookTransactionServiceImpl implements BookTransactionService {
                 .recipientName(request.getRecipientName())
                 .recipientPhone(request.getRecipientPhone())
                 .status("예약 중")
-                .productTitle(book.getTitle())         // 교재 제목 추가
-                .sellerId(book.getSellerId())
                 .build();
-
         transactionRepository.save(transaction);
 
+        // 임시 응답
         // 응답 구성
         BookPurchaseResponse response = new BookPurchaseResponse();
         response.setMessage("직거래 요청이 완료되었습니다.");
@@ -54,4 +53,5 @@ public class BookTransactionServiceImpl implements BookTransactionService {
 
         return response;
     }
+
 }
