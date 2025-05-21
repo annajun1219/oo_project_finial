@@ -5,19 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8a1bbb2-d274-4f86-9c07-a00aa894cccf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/dto/BookDetailResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/controller/BookTransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/controller/BookTransactionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/dto/BookDetailResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/dto/BookDetailResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/dto/BookRegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/dto/BookRegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/controller/ChatRoomController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/dto/ChatMessageDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/dto/ChatMessageRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/dto/ChatRoomResponseDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/entity/ChatMessage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/entity/ChatRoom.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/repository/ChatMessageRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/repository/ChatRoomRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/service/ChatService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/entity/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/entity/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +62,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -138,6 +131,7 @@
       <workItem from="1747642207359" duration="35421000" />
       <workItem from="1747749819243" duration="9636000" />
       <workItem from="1747807293762" duration="8232000" />
+      <workItem from="1747816431136" duration="1115000" />
     </task>
     <servers />
   </component>

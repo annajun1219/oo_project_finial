@@ -12,15 +12,15 @@ public class BookDetailResponse {
     private Long productId;
     private String title;
     private int price;
-    private Integer officialPrice;       // 응답 유동성 반영: null 허용
-    private Integer averageUsedPrice;    // 응답 유동성 반영: null 허용
-    private Integer discountRate;        // 응답 유동성 반영: null 허용
+    private Integer officialPrice;       // null 허용
+    private Integer averageUsedPrice;    // null 허용
+    private Integer discountRate;        // null 허용
     private String description;
     private String imageUrl;
     private String status;
     private String createdAt;
     private SellerInfo seller;
-    private Boolean isMyPost;            // 응답 유동성 반영: null 허용
+    private Boolean isMyPost;            // null 허용
 
     @Getter
     @Setter
@@ -29,8 +29,8 @@ public class BookDetailResponse {
     @Builder
     public static class SellerInfo {
         private Long sellerId;
-        private String nickname;
-        private String profileImage;
-        private Integer warningCount;    // 필요 시 추가 필드
+        private String name;             // ✅ User.java에 존재하는 필드
+        private String profileImage;     // ✅ User.java에 존재
+        private String phone;            // ✅ User.java에 존재
     }
 }

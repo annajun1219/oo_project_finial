@@ -12,5 +12,6 @@ public class BookRegisterRequest {
     private String professorName;
     private int price;
     private String description;
+    private String imageUrl;
 }
 
