@@ -22,5 +22,6 @@ public class Book {
     private int price;            // 가격
     private String description;   // 설명
 
-    private String imageUrl;      // 이미지 경로 (선택)
+    private String imageUrl;      // 이미지 경로
+
 }
