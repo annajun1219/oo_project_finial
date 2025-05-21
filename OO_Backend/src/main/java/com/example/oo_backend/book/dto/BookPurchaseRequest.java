@@ -12,4 +12,5 @@ public class BookPurchaseRequest {
     private String paymentMethod;
     private String recipientName;
     private String recipientPhone;
+
 }

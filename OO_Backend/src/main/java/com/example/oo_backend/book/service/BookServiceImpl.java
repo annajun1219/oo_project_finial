@@ -38,6 +38,7 @@ public class BookServiceImpl implements BookService {
         response.setBookId(book.getId());
         response.setMessage("교재가 등록되었습니다.");
         return response;
+
     }
 
     @Override

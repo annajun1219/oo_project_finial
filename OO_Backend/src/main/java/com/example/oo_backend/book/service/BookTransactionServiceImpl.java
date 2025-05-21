@@ -32,6 +32,8 @@ public class BookTransactionServiceImpl implements BookTransactionService {
                 .recipientName(request.getRecipientName())
                 .recipientPhone(request.getRecipientPhone())
                 .status("예약 중")
+                .productTitle(book.getTitle())
+                .sellerId(book.getSellerId())
                 .build();
         transactionRepository.save(transaction);
 
