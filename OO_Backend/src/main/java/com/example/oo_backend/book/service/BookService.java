@@ -5,7 +5,5 @@ import com.example.oo_backend.book.dto.BookRegisterResponse;
 
 public interface BookService {
     BookRegisterResponse registerBook(BookRegisterRequest request);
-
-    // 교재 상세 조회
-    BookDetailResponse getBookDetail(Long productId, Long viewerId);  // viewerId는 null 허용
+    
 }
