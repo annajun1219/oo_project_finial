@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8a1bbb2-d274-4f86-9c07-a00aa894cccf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/dto/BookDetailResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/controller/ChatRoomController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/dto/ChatMessageDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/dto/ChatMessageRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/dto/ChatRoomResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/entity/ChatMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/entity/ChatRoom.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/repository/ChatMessageRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/repository/ChatRoomRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/service/ChatService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/controller/BookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/entity/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/entity/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookTransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookTransactionServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/user/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/user/entity/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +58,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -86,31 +71,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.OoBackendApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build OO_Backend.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.OoBackendApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ys&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.OoBackendApplication.executor": "Run",
+    "Gradle.Build OO_Backend.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.OoBackendApplication.executor": "Run",
+    "git-widget-placeholder": "ys",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "Docker",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="OoBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
@@ -141,11 +126,22 @@
       <workItem from="1747385946923" duration="1097000" />
       <workItem from="1747642207359" duration="35421000" />
       <workItem from="1747749819243" duration="9636000" />
-      <workItem from="1747807293762" duration="5573000" />
+      <workItem from="1747807293762" duration="6574000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

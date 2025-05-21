@@ -29,6 +29,4 @@ public class User {
 
     private String profileImage;
 
-    private String nickname;
-    private Integer warningCount;
 }
