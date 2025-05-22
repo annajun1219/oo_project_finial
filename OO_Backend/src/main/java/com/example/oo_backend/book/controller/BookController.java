@@ -20,10 +20,11 @@ public class BookController {
         BookRegisterResponse response = bookService.registerBook(request);
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/{productId}")
     public ResponseEntity<BookDetailResponse> getBookDetail(
             @PathVariable Long productId,
-            @RequestParam(required = false) Long viewerId) {
+            @RequestHeader(value = "viewerId", required = false) Long viewerId) {
 
         BookDetailResponse response = bookService.getBookDetail(productId, viewerId);
         return ResponseEntity.ok(response);
