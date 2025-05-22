@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SalesService {
     List<SalesHistoryResponse> getSalesHistory(Long sellerId, String status);
+
+    void updateTransactionStatus(Long transactionId, String newStatus);
 }

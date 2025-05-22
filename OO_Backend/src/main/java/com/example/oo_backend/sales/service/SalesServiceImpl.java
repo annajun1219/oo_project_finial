@@ -44,4 +44,13 @@ public class SalesServiceImpl implements SalesService {
                     .collect(Collectors.toList());
         }
     }
+
+    @Override
+    public void updateTransactionStatus(Long transactionId, String newStatus) {
+        BookTransaction transaction = bookTransactionRepository.findById(transactionId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 거래를 찾을 수 없습니다."));
+
+        transaction.setStatus(newStatus);
+        bookTransactionRepository.save(transaction);
+    }
 }
