@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/purchase")
@@ -31,4 +33,12 @@ public class BookTransactionController {
         BookPurchaseResponse response = transactionService.createDirectTransaction(request);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/history")
+    public List<BookPurchaseResponse> getPurchaseHistory(
+            @RequestHeader("userId") Long userId,
+            @RequestParam(value = "status", required = false) String status) {
+        return transactionService.getPurchaseHistory(userId, status);
+    }
+
 }

@@ -3,6 +3,8 @@ package com.example.oo_backend.book.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -37,6 +39,13 @@ public class BookTransaction {
 
     // 거래 상태 (예: "직거래 요청", "예약 중")
     private String status;
+
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }
 
 

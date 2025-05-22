@@ -10,6 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+
 @Service
 @RequiredArgsConstructor
 public class BookTransactionServiceImpl implements BookTransactionService {
@@ -54,6 +58,31 @@ public class BookTransactionServiceImpl implements BookTransactionService {
         response.setContactInfo(contact);
 
         return response;
+    }
+
+    @Override
+    public List<BookPurchaseResponse> getPurchaseHistory(Long userId, String status) {
+        List<BookTransaction> transactions = (status != null && !status.isEmpty())
+                ? transactionRepository.findByBuyerIdAndStatus(userId, status)
+                : transactionRepository.findByBuyerId(userId);
+
+        return transactions.stream()
+                .map(tx -> {
+                    BookPurchaseResponse res = new BookPurchaseResponse();
+                    res.setTransactionId(tx.getId());
+                    res.setProductTitle(tx.getProductTitle());
+                    res.setStatus(tx.getStatus());
+                    res.setSellerId(tx.getSellerId());
+                    res.setBuyerId(tx.getBuyerId());
+
+                    BookPurchaseResponse.ContactInfo contact = new BookPurchaseResponse.ContactInfo();
+                    contact.setRecipientName(tx.getRecipientName());
+                    contact.setRecipientPhone(tx.getRecipientPhone());
+                    res.setContactInfo(contact);
+
+                    return res;
+                })
+                .collect(Collectors.toList());
     }
 
 }
