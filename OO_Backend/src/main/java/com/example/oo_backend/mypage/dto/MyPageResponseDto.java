@@ -15,7 +15,6 @@ public class MyPageResponseDto {
     private String nickname;
     private String profileImage;
     private double rating;
-    private int reviewCount;
     private int saleCount;
     private int purchaseCount;
     private List<ScheduleDto> scheduleInfo;

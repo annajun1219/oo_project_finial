@@ -54,7 +54,6 @@ public class MyPageServiceImpl implements MyPageService {
                 .nickname(user.getName())
                 .profileImage(user.getProfileImage())
                 .rating(rating)
-                .reviewCount(reviewCount)
                 .saleCount(saleCount)
                 .purchaseCount(purchaseCount)
                 .scheduleInfo(schedule)
