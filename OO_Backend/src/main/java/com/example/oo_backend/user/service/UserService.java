@@ -57,4 +57,11 @@ public class UserService {
 
         return response;
     }
+
+    // 사용자 이름 조회
+    public String getUserName(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."))
+                .getName();
+    }
 }
