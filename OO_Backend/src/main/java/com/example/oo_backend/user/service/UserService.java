@@ -64,4 +64,28 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."))
                 .getName();
     }
+
+    // 사용자 탈퇴
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        userRepository.delete(user);
+    }
+
+    // 이메일 중복 확인
+    public boolean checkEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    // 휴대폰 번호 중복 확인
+    public boolean checkPhone(String phone) {
+        return userRepository.existsByPhone(phone);
+    }
+
+    // 닉네임(아이디) 중복 확인
+    public boolean checkName(String name) {
+        return userRepository.existsByName(name);
+    }
+
 }

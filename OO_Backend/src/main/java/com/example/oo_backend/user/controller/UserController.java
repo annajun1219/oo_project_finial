@@ -44,4 +44,29 @@ public class UserController {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+
+    // 회원탈퇴
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
+    }
+
+    // 이메일 중복확인
+    @GetMapping("/check-email")
+    public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
+        return ResponseEntity.ok(userService.checkEmail(email));
+    }
+
+    // 휴대폰번호 중복확인
+    @GetMapping("/check-phone")
+    public ResponseEntity<Boolean> checkPhone(@RequestParam String phone) {
+        return ResponseEntity.ok(userService.checkPhone(phone));
+    }
+
+    // 닉네임 중복확인
+    @GetMapping("/check-name")
+    public ResponseEntity<Boolean> checkName(@RequestParam String name) {
+        return ResponseEntity.ok(userService.checkName(name));
+    }
 }

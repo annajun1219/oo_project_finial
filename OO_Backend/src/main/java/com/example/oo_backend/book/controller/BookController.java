@@ -37,4 +37,14 @@ public class BookController {
     public ResponseEntity<List<BookPreviewDto>> getBooksByDepartment(@RequestParam String department) {
         return ResponseEntity.ok(bookService.getBooksByDepartment(department));
     }
+
+    @GetMapping("/search-by-professor")
+    public ResponseEntity<List<BookPreviewDto>> searchByProfessor(@RequestParam String keyword, @RequestParam String category) {
+        return ResponseEntity.ok(bookService.searchByProfessorAndCategory(keyword, category));
+    }
+
+    @GetMapping("/search-by-title")
+    public ResponseEntity<List<BookPreviewDto>> searchByTitle(@RequestParam String keyword, @RequestParam String category) {
+        return ResponseEntity.ok(bookService.searchByTitleAndCategory(keyword, category));
+    }
 }

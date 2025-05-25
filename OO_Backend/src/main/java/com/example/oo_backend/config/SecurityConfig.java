@@ -18,18 +18,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors().and() // CORS 허용
-                .csrf(csrf -> csrf.disable()) // CSRF 비활성화
-                .formLogin(form -> form.disable()) // 기본 로그인 폼 제거
-                .httpBasic(basic -> basic.disable()) // 기본 인증 비활성화
+                .csrf(csrf -> csrf.disable())  // POST 요청 위해 임시로 꺼둠 (추후 토큰 방식 사용할 경우 필요 없음)
+                .formLogin(form -> form.disable()) //  기본 로그인 폼 비활성화
+                .httpBasic(basic -> basic.disable()) //  기본 인증 헤더 비활성화
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/users/signup",
-                                "/api/users/login",
-                                "/api/purchase/**", // purchase 경로 전부 허용
-                                "/**" // 임시로 전체 허용
-                        ).permitAll()
-                        .anyRequest().permitAll() // 전체 요청 허용 (테스트 목적)
+                        .requestMatchers("/api/users/**", "/api/chatrooms", "/api/chatrooms/**",
+                                "/api/purchase/**", "/api/books/**", "/api/schedule", "/api/mypage",
+                                "/api/recommendation/**", "/api/main", "/api/search/**").permitAll()
+                        .anyRequest().authenticated()  // 그 외는 인증 필요
                 );
 
         return http.build();

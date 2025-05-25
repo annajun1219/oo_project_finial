@@ -13,6 +13,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findByCategory(String category);
 
+    Optional<Book> findTopByOrderByCreatedAtDesc();
+
     // 교재 추천
     List<Book> findByTitleAndProfessorName(String title, String professorName);
 
@@ -22,6 +24,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     // 추가: 교수명 기반 (부분 일치)
     List<Book> findByProfessorNameContaining(String professorName);
 
-    // 🔽 추가: 가장 최근 등록된 교재 1개
-    Optional<Book> findTopByOrderByCreatedAtDesc();
+    // 추가: 전체 검색
+    List<Book> findByTitleContainingIgnoreCase(String title);
+    List<Book> findByProfessorNameContainingIgnoreCase(String professorName);
+
+    // 추가: 단과대별 검색 필터
+    List<Book> findByProfessorNameContainingAndCategory(String professorName, String category);
+    List<Book> findByTitleContainingAndCategory(String title, String category);
+
 }
