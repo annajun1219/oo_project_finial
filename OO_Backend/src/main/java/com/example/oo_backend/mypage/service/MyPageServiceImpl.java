@@ -9,6 +9,8 @@ import com.example.oo_backend.review.entity.Review;
 import com.example.oo_backend.review.repository.ReviewRepository;
 import com.example.oo_backend.user.entity.User;
 import com.example.oo_backend.user.repository.UserRepository;
+import com.example.oo_backend.warning.repository.WarningRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class MyPageServiceImpl implements MyPageService {
     private final BookRepository bookRepository;
     private final BookTransactionRepository bookTransactionRepository;
     private final ScheduleRepository scheduleRepository;
+    private final WarningRepository warningRepository;
+
 
     @Override
     public MyPageResponseDto getMyPageInfo(Long userId) {
@@ -37,8 +41,11 @@ public class MyPageServiceImpl implements MyPageService {
         double rating = reviewCount == 0 ? 0.0 :
                 reviews.stream().mapToInt(Review::getRating).average().orElse(0.0);
 
+
         int saleCount = bookRepository.countBySellerId(user.getUserId());
         int purchaseCount = bookTransactionRepository.countByBuyerId(user.getUserId());
+        int warningCount = warningRepository.countByWarnedUserId(user.getUserId());
+
         List<ScheduleDto> schedule = scheduleRepository.findByUser(user).stream()
                 .map(s -> new ScheduleDto(
                         s.getDay(),
@@ -56,6 +63,7 @@ public class MyPageServiceImpl implements MyPageService {
                 .rating(rating)
                 .saleCount(saleCount)
                 .purchaseCount(purchaseCount)
+                .warningCount(warningCount)
                 .scheduleInfo(schedule)
                 .build();
     }

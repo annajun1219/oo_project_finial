@@ -17,5 +17,7 @@ public class MyPageResponseDto {
     private double rating;
     private int saleCount;
     private int purchaseCount;
+    private int warningCount;
+
     private List<ScheduleDto> scheduleInfo;
 }
