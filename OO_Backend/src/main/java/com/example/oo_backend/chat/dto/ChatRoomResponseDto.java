@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class ChatRoomResponseDto {
-    private String roomId;
+    private Long roomId;
     private String otherUserId;
     private String otherUserName;
     private String otherUserProfileImage;

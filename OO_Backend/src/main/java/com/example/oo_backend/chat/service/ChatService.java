@@ -1,5 +1,7 @@
 package com.example.oo_backend.chat.service;
 
+import com.example.oo_backend.book.dto.BookPurchaseRequest;
+import com.example.oo_backend.book.dto.BookPurchaseResponse;
 import com.example.oo_backend.book.service.BookTransactionService;
 import com.example.oo_backend.chat.dto.ChatMessageDto;
 import com.example.oo_backend.chat.dto.ChatRoomResponseDto;
@@ -8,17 +10,10 @@ import com.example.oo_backend.chat.entity.ChatMessage;
 import com.example.oo_backend.chat.entity.ChatRoom;
 import com.example.oo_backend.chat.repository.ChatMessageRepository;
 import com.example.oo_backend.chat.repository.ChatRoomRepository;
-import com.example.oo_backend.sales.dto.PurchaseHistoryResponse;
-import com.example.oo_backend.sales.service.PurchaseService;
 import com.example.oo_backend.user.entity.User;
 import com.example.oo_backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import com.example.oo_backend.book.dto.BookPurchaseRequest;
-import com.example.oo_backend.book.dto.BookPurchaseResponse;
-
-
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -49,7 +44,7 @@ public class ChatService {
                             .roomId(room.getId())
                             .otherUserId(otherUser.getUserId().toString())
                             .otherUserName(otherUser.getName())
-                            .otherUserProfileImage(otherUser.getProfileImage()) // null일 수도 있음
+                            .otherUserProfileImage(otherUser.getProfileImage())
                             .lastMessage(lastMessageOpt.map(ChatMessage::getContent).orElse(""))
                             .lastSentAt(lastMessageOpt.map(ChatMessage::getSentAt).orElse(null))
                             .build();
@@ -58,7 +53,7 @@ public class ChatService {
     }
 
     // 채팅방 1:1
-    public List<ChatMessageDto> getChatMessages(String roomId, Long userId) {
+    public List<ChatMessageDto> getChatMessages(Long roomId, Long userId) {
         ChatRoom room = chatRoomRepository.findById(roomId)
                 .orElseThrow(() -> new IllegalArgumentException("채팅방을 찾을 수 없습니다."));
 
@@ -73,7 +68,7 @@ public class ChatService {
     }
 
     // 채팅방 1:1 메세지 전송
-    public void sendMessage(String roomId, Long senderId, String content) {
+    public void sendMessage(Long roomId, Long senderId, String content) {
         ChatRoom room = chatRoomRepository.findById(roomId)
                 .orElseThrow(() -> new IllegalArgumentException("채팅방이 존재하지 않습니다."));
 
@@ -100,7 +95,6 @@ public class ChatService {
                     .orElseThrow(() -> new IllegalArgumentException("판매자 정보를 찾을 수 없습니다."));
 
             ChatRoom newRoom = ChatRoom.builder()
-                    .id(UUID.randomUUID().toString())
                     .user1(buyer)
                     .user2(seller)
                     .bookId(bookId)
@@ -123,8 +117,4 @@ public class ChatService {
     public BookPurchaseResponse reserveDirectPurchase(BookPurchaseRequest request) {
         return bookTransactionService.createDirectTransaction(request);
     }
-
-
-
 }
-

@@ -38,7 +38,7 @@ public class ChatRoomController {
 
     // 채팅방 메시지 조회
     @GetMapping("/{roomId}/messages")
-    public ResponseEntity<?> getChatMessages(@PathVariable String roomId, @RequestHeader("userId") Long userId) {
+    public ResponseEntity<?> getChatMessages(@PathVariable Long roomId, @RequestHeader("userId") Long userId) {
         List<ChatMessageDto> messages = chatService.getChatMessages(roomId, userId);
         return ResponseEntity.ok(messages);
     }
@@ -46,7 +46,7 @@ public class ChatRoomController {
     // 채팅방 메시지 전송
     @PostMapping("/{roomId}/messages")
     public ResponseEntity<?> sendMessage(
-            @PathVariable String roomId,
+            @PathVariable Long roomId,
             @RequestHeader("userId") Long userId,
             @RequestBody ChatMessageRequestDto requestDto) {
 

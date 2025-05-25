@@ -13,7 +13,9 @@ import lombok.*;
 public class ChatRoom {
 
     @Id
-    private String id;  // 채팅방 고유 ID (예: UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    // 채팅방 고유 ID (예: UUID)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user1_id")
