@@ -22,6 +22,7 @@ public class Book {
     private String category;           // 카테고리
     private String professorName;      // 교수명
     private int price;                 // 가격
+    private int officialPrice;         // 정가
     private String description;        // 설명
     private String imageUrl;           // 이미지 경로 (선택)
     private String status;             // 판매 상태 (판매중, 예약중, 완료 등)

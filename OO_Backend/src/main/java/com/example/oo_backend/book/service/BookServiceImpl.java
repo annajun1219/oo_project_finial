@@ -35,6 +35,7 @@ public class BookServiceImpl implements BookService {
                 .title(request.getTitle())
                 .category(request.getCategory())
                 .professorName(request.getProfessorName())
+                .officialPrice(request.getOfficialPrice())
                 .price(request.getPrice())
                 .description(request.getDescription())
                 .sellerId(request.getSellerId())
@@ -70,9 +71,12 @@ public class BookServiceImpl implements BookService {
                 .productId(book.getId())
                 .title(book.getTitle())
                 .price(book.getPrice())
-                .officialPrice(null)         // 추가 정보 없는 경우 null
-                .averageUsedPrice(null)
-                .discountRate(null)
+                .officialPrice(book.getOfficialPrice())
+                .discountRate(
+                        (book.getOfficialPrice() != 0)
+                                ? (int) Math.round((1 - (double) book.getPrice() / book.getOfficialPrice()) * 100)
+                                : 0
+                )
                 .description(book.getDescription())
                 .imageUrl(book.getImageUrl())
                 .status(book.getStatus())

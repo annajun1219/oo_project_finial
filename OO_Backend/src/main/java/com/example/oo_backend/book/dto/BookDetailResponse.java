@@ -13,7 +13,6 @@ public class BookDetailResponse {
     private String title;
     private int price;
     private Integer officialPrice;       // null 허용
-    private Integer averageUsedPrice;    // null 허용
     private Integer discountRate;        // null 허용
     private String description;
     private String imageUrl;

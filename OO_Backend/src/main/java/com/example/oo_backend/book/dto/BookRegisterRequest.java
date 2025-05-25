@@ -10,6 +10,7 @@ public class BookRegisterRequest {
     private String title;
     private String category;
     private String professorName;
+    private int officialPrice;
     private int price;
     private String description;
     private String imageUrl;
