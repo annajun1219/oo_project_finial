@@ -2,14 +2,14 @@ package com.example.oo_backend.chat.entity;
 
 import com.example.oo_backend.user.entity.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ChatRoom {
 
     @Id
@@ -23,8 +23,7 @@ public class ChatRoom {
     @JoinColumn(name = "user2_id")
     private User user2;  // 참여자 2
 
-    // 필요하다면 생성일자 등 필드 추가 가능
+    private Long bookId; // 책 ID 추가 (있다면)
+
+    // 생성일자 등 필요한 추가 필드도 여기에 작성
 }
-
-
-

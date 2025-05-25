@@ -8,6 +8,9 @@ import com.example.oo_backend.chat.entity.ChatRoom;
 import com.example.oo_backend.chat.repository.ChatMessageRepository;
 import com.example.oo_backend.chat.repository.ChatRoomRepository;
 import com.example.oo_backend.user.entity.User;
+
+import com.example.oo_backend.chat.dto.ChatRoomResponseDto;
+import com.example.oo_backend.chat.dto.StartChatRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -73,5 +76,40 @@ public class ChatService {
         ChatMessage message = new ChatMessage(room, sender, content, LocalDateTime.now());
         chatMessageRepository.save(message);
     }
+
+    // 채팅방 생성 또는 기존 방 불러오기
+    public ChatRoomResponseDto startChat(StartChatRequestDto requestDto) {
+        Long buyerId = requestDto.getBuyerId();
+        Long sellerId = requestDto.getSellerId();
+        Long bookId = requestDto.getBookId();
+
+        Optional<ChatRoom> existingRoom = chatRoomRepository
+                .findByUser1UserIdAndUser2UserIdAndBookId(buyerId, sellerId, bookId);
+
+        ChatRoom chatRoom = existingRoom.orElseGet(() -> {
+            User buyer = userRepository.findById(buyerId)
+                    .orElseThrow(() -> new IllegalArgumentException("구매자 정보를 찾을 수 없습니다."));
+            User seller = userRepository.findById(sellerId)
+                    .orElseThrow(() -> new IllegalArgumentException("판매자 정보를 찾을 수 없습니다."));
+
+            ChatRoom newRoom = ChatRoom.builder()
+                    .user1(buyer)
+                    .user2(seller)
+                    .bookId(bookId)
+                    .build();
+
+            return chatRoomRepository.save(newRoom);
+        });
+
+        User otherUser = chatRoom.getUser1().getUserId().equals(buyerId) ? chatRoom.getUser2() : chatRoom.getUser1();
+
+        return ChatRoomResponseDto.builder()
+                .roomId(chatRoom.getId())
+                .otherUserId(otherUser.getUserId().toString())
+                .otherUserName(otherUser.getName())
+                .otherUserProfileImage(otherUser.getProfileImage())
+                .build();
+    }
+
 }
 

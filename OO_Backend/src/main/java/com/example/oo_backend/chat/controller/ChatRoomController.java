@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.oo_backend.chat.dto.StartChatRequestDto;
+
+
 import java.util.List;
 
 @RestController
@@ -46,5 +49,12 @@ public class ChatRoomController {
         chatService.sendMessage(roomId, userId, requestDto.getMessage());
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/start")
+    public ResponseEntity<ChatRoomResponseDto> startChat(@RequestBody StartChatRequestDto requestDto) {
+        ChatRoomResponseDto response = chatService.startChat(requestDto);
+        return ResponseEntity.ok(response);
+    }
+
 
 }

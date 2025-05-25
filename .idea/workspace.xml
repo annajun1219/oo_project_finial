@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8a1bbb2-d274-4f86-9c07-a00aa894cccf" name="Changes" comment="" />
+    <list default="true" id="e8a1bbb2-d274-4f86-9c07-a00aa894cccf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/dto/StartChatRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/service/ChatServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/controller/ChatRoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/controller/ChatRoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/entity/ChatRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/entity/ChatRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/repository/ChatRoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/repository/ChatRoomRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/service/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/chat/service/ChatService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -127,7 +135,8 @@
       <workItem from="1747807293762" duration="8232000" />
       <workItem from="1747816431136" duration="11582000" />
       <workItem from="1747838770484" duration="27800000" />
-      <workItem from="1747978843836" duration="7285000" />
+      <workItem from="1747978843836" duration="9322000" />
+      <workItem from="1748144755407" duration="2961000" />
     </task>
     <servers />
   </component>
