@@ -7,6 +7,10 @@ import com.example.oo_backend.book.entity.BookTransaction;
 import com.example.oo_backend.book.repository.BookRepository;
 import com.example.oo_backend.book.repository.BookTransactionRepository;
 import com.example.oo_backend.review.repository.ReviewRepository;
+import com.example.oo_backend.user.entity.User;
+import com.example.oo_backend.user.entity.UserStatus;
+import com.example.oo_backend.user.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +26,32 @@ public class BookTransactionServiceImpl implements BookTransactionService {
     private final BookTransactionRepository transactionRepository;
     private final BookRepository bookRepository;
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
+
 
     @Override
     public BookPurchaseResponse createDirectTransaction(BookPurchaseRequest request) {
+
         // 교재 정보 조회
         Book book = bookRepository.findById(request.getProductId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 교재를 찾을 수 없습니다."));
+
+        // 구매자 상태 확인
+        User buyer = userRepository.findById(request.getBuyerId())
+                .orElseThrow(() -> new IllegalArgumentException("구매자 정보를 찾을 수 없습니다."));
+
+        if (buyer.getStatus() == UserStatus.SUSPENDED) {
+            throw new IllegalStateException("구매자의 계정은 사용 중지 상태입니다.");
+        }
+
+        // 판매자 상태 확인
+        User seller = userRepository.findById(book.getSellerId())
+                .orElseThrow(() -> new IllegalArgumentException("판매자 정보를 찾을 수 없습니다."));
+
+        if (seller.getStatus() == UserStatus.SUSPENDED) {
+            throw new IllegalStateException("판매자의 계정은 사용 중지 상태입니다.");
+        }
+
 
         // 거래 저장
         BookTransaction transaction = BookTransaction.builder()

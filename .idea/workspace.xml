@@ -5,17 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8a1bbb2-d274-4f86-9c07-a00aa894cccf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/warning/controller/WarningController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/warning/dto/WarningRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/warning/dto/WarningResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/warning/entity/Warning.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/warning/repository/WarningRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/warning/service/WarningService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/warning/service/WarningServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/user/entity/UserStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/mypage/dto/MyPageResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/mypage/dto/MyPageResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/mypage/service/MyPageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/mypage/service/MyPageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/user/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/user/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/warning/service/WarningServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/warning/service/WarningServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +135,7 @@
       <workItem from="1747838770484" duration="27800000" />
       <workItem from="1747978843836" duration="9322000" />
       <workItem from="1748144755407" duration="24344000" />
-      <workItem from="1748183149687" duration="1034000" />
+      <workItem from="1748183149687" duration="2462000" />
     </task>
     <servers />
   </component>

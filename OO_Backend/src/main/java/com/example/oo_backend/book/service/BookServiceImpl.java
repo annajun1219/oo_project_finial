@@ -11,6 +11,9 @@ import com.example.oo_backend.book.repository.BookRepository;
 import com.example.oo_backend.user.entity.User;
 import com.example.oo_backend.user.repository.UserRepository;
 import com.example.oo_backend.book.dto.BookPreviewDto;
+import com.example.oo_backend.user.entity.User;
+import com.example.oo_backend.user.entity.UserStatus;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +34,13 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookRegisterResponse registerBook(BookRegisterRequest request) {
+        User user = userRepository.findById(request.getSellerId())
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        if (user.getStatus() == UserStatus.SUSPENDED) {
+            throw new IllegalStateException("사용 중지된 계정입니다.");
+        }
+
         Book book = Book.builder()
                 .title(request.getTitle())
                 .category(request.getCategory())

@@ -1,5 +1,7 @@
 package com.example.oo_backend.user.entity;
 
+import com.example.oo_backend.user.entity.UserStatus;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,5 +30,8 @@ public class User {
     private LocalDate birth;
 
     private String profileImage;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus status = UserStatus.ACTIVE;
 
 }
