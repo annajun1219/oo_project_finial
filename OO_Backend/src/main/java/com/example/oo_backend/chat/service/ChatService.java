@@ -1,18 +1,24 @@
 package com.example.oo_backend.chat.service;
 
-import com.example.oo_backend.user.repository.UserRepository;
+import com.example.oo_backend.book.service.BookTransactionService;
 import com.example.oo_backend.chat.dto.ChatMessageDto;
 import com.example.oo_backend.chat.dto.ChatRoomResponseDto;
+import com.example.oo_backend.chat.dto.StartChatRequestDto;
 import com.example.oo_backend.chat.entity.ChatMessage;
 import com.example.oo_backend.chat.entity.ChatRoom;
 import com.example.oo_backend.chat.repository.ChatMessageRepository;
 import com.example.oo_backend.chat.repository.ChatRoomRepository;
+import com.example.oo_backend.sales.dto.PurchaseHistoryResponse;
+import com.example.oo_backend.sales.service.PurchaseService;
 import com.example.oo_backend.user.entity.User;
-
-import com.example.oo_backend.chat.dto.ChatRoomResponseDto;
-import com.example.oo_backend.chat.dto.StartChatRequestDto;
+import com.example.oo_backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import com.example.oo_backend.book.dto.BookPurchaseRequest;
+import com.example.oo_backend.book.dto.BookPurchaseResponse;
+
+
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -25,6 +31,7 @@ public class ChatService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final UserRepository userRepository;
+    private final BookTransactionService bookTransactionService;
 
     // 채팅방 목록 조회
     public List<ChatRoomResponseDto> getChatRooms(User loginUser) {
@@ -93,6 +100,7 @@ public class ChatService {
                     .orElseThrow(() -> new IllegalArgumentException("판매자 정보를 찾을 수 없습니다."));
 
             ChatRoom newRoom = ChatRoom.builder()
+                    .id(UUID.randomUUID().toString())
                     .user1(buyer)
                     .user2(seller)
                     .bookId(bookId)
@@ -110,6 +118,13 @@ public class ChatService {
                 .otherUserProfileImage(otherUser.getProfileImage())
                 .build();
     }
+
+    // 예약 완료 → 구매내역 연동
+    public BookPurchaseResponse reserveDirectPurchase(BookPurchaseRequest request) {
+        return bookTransactionService.createDirectTransaction(request);
+    }
+
+
 
 }
 
