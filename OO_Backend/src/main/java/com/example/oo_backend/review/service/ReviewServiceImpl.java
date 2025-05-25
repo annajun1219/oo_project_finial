@@ -9,6 +9,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import com.example.oo_backend.book.repository.BookTransactionRepository;
+import com.example.oo_backend.book.entity.BookTransaction;
+
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +22,7 @@ import java.util.stream.Collectors;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final BookTransactionRepository bookTransactionRepository;
 
     @Override
     public ReviewResponseDto createReview(ReviewRequestDto dto) {
@@ -27,16 +32,19 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
         // 중복 리뷰 확인
-        if (dto.getTransactionId() != null && reviewRepository.existsByTransactionId(dto.getTransactionId())) {
+        if (dto.getTransactionId() != null && reviewRepository.existsByTransaction_Id(dto.getTransactionId())) {
             throw new IllegalStateException("이미 이 거래에 대해 리뷰가 작성되었습니다.");
         }
+
+        BookTransaction transaction = bookTransactionRepository.findById(dto.getTransactionId())
+                .orElseThrow(() -> new IllegalArgumentException("거래를 찾을 수 없습니다."));
 
         // 리뷰 엔티티 생성
         Review review = Review.builder()
                 .reviewerId(dto.getReviewerId())
                 .productId(dto.getProductId())
                 .sellerId(dto.getSellerId())
-                .transactionId(dto.getTransactionId())
+                .transaction(transaction)
                 .rating(dto.getRating())
                 .content(dto.getContent())
                 .build();

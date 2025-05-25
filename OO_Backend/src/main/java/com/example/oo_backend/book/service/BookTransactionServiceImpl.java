@@ -6,6 +6,7 @@ import com.example.oo_backend.book.entity.Book;
 import com.example.oo_backend.book.entity.BookTransaction;
 import com.example.oo_backend.book.repository.BookRepository;
 import com.example.oo_backend.book.repository.BookTransactionRepository;
+import com.example.oo_backend.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class BookTransactionServiceImpl implements BookTransactionService {
 
     private final BookTransactionRepository transactionRepository;
     private final BookRepository bookRepository;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public BookPurchaseResponse createDirectTransaction(BookPurchaseRequest request) {
@@ -57,6 +59,8 @@ public class BookTransactionServiceImpl implements BookTransactionService {
         contact.setRecipientPhone(request.getRecipientPhone());
         response.setContactInfo(contact);
 
+        response.setHasReview(false);
+
         return response;
     }
 
@@ -68,12 +72,15 @@ public class BookTransactionServiceImpl implements BookTransactionService {
 
         return transactions.stream()
                 .map(tx -> {
+                    boolean hasReview = reviewRepository.existsByTransaction_Id(tx.getId());
+
                     BookPurchaseResponse res = new BookPurchaseResponse();
                     res.setTransactionId(tx.getId());
                     res.setProductTitle(tx.getProductTitle());
                     res.setStatus(tx.getStatus());
                     res.setSellerId(tx.getSellerId());
                     res.setBuyerId(tx.getBuyerId());
+                    res.setHasReview(hasReview);
 
                     BookPurchaseResponse.ContactInfo contact = new BookPurchaseResponse.ContactInfo();
                     contact.setRecipientName(tx.getRecipientName());

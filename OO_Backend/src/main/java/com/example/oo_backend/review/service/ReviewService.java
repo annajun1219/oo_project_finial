@@ -12,4 +12,5 @@ public interface ReviewService {
 
     // 리뷰 조회 (productId 또는 sellerId 기준)
     List<ReviewResponseDto> getReviews(Long productId, Long sellerId, String sortBy, int offset, int limit);
+
 }

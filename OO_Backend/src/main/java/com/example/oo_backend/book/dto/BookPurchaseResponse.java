@@ -18,6 +18,7 @@ public class BookPurchaseResponse {
     private Long sellerId;
     private Long buyerId;
     private ContactInfo contactInfo;
+    private boolean hasReview;
 
     @Getter
     @Setter
@@ -27,4 +28,5 @@ public class BookPurchaseResponse {
         private String recipientName;
         private String recipientPhone;
     }
+
 }

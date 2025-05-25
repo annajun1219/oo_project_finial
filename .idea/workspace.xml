@@ -5,20 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8a1bbb2-d274-4f86-9c07-a00aa894cccf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/search/controller/SearchController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/search/dto/SearchResultDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/search/entity/SearchHistory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/search/repository/SearchHistoryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/search/service/SearchService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/search/service/SearchServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/controller/BookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/repository/BookRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/repository/BookRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/dto/BookPurchaseResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/dto/BookPurchaseResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookTransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/book/service/BookTransactionServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/user/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/user/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/user/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/user/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/review/entity/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/review/entity/Review.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/review/repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/review/repository/ReviewRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/review/service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/review/service/ReviewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/review/service/ReviewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/OO_Backend/src/main/java/com/example/oo_backend/review/service/ReviewServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +137,7 @@
       <workItem from="1747816431136" duration="11582000" />
       <workItem from="1747838770484" duration="27800000" />
       <workItem from="1747978843836" duration="9322000" />
-      <workItem from="1748144755407" duration="19798000" />
+      <workItem from="1748144755407" duration="22994000" />
     </task>
     <servers />
   </component>
