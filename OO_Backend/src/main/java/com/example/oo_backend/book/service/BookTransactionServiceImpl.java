@@ -40,10 +40,6 @@ public class BookTransactionServiceImpl implements BookTransactionService {
         User buyer = userRepository.findById(request.getBuyerId())
                 .orElseThrow(() -> new IllegalArgumentException("구매자 정보를 찾을 수 없습니다."));
 
-        if (buyer.getStatus() == UserStatus.SUSPENDED) {
-            throw new IllegalStateException("구매자의 계정은 사용 중지 상태입니다.");
-        }
-
         // 판매자 상태 확인
         User seller = userRepository.findById(book.getSellerId())
                 .orElseThrow(() -> new IllegalArgumentException("판매자 정보를 찾을 수 없습니다."));

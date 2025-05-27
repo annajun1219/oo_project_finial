@@ -37,10 +37,6 @@ public class BookServiceImpl implements BookService {
         User user = userRepository.findById(request.getSellerId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
-        if (user.getStatus() == UserStatus.SUSPENDED) {
-            throw new IllegalStateException("사용 중지된 계정입니다.");
-        }
-
         Book book = Book.builder()
                 .title(request.getTitle())
                 .category(request.getCategory())
