@@ -8,7 +8,6 @@ import com.example.oo_backend.book.repository.BookRepository;
 import com.example.oo_backend.book.repository.BookTransactionRepository;
 import com.example.oo_backend.review.repository.ReviewRepository;
 import com.example.oo_backend.user.entity.User;
-import com.example.oo_backend.user.entity.UserStatus;
 import com.example.oo_backend.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -43,10 +42,6 @@ public class BookTransactionServiceImpl implements BookTransactionService {
         // 판매자 상태 확인
         User seller = userRepository.findById(book.getSellerId())
                 .orElseThrow(() -> new IllegalArgumentException("판매자 정보를 찾을 수 없습니다."));
-
-        if (seller.getStatus() == UserStatus.SUSPENDED) {
-            throw new IllegalStateException("판매자의 계정은 사용 중지 상태입니다.");
-        }
 
 
         // 거래 저장

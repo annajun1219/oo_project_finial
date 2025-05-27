@@ -11,14 +11,11 @@ import com.example.oo_backend.book.repository.BookRepository;
 import com.example.oo_backend.user.entity.User;
 import com.example.oo_backend.user.repository.UserRepository;
 import com.example.oo_backend.book.dto.BookPreviewDto;
-import com.example.oo_backend.user.entity.User;
-import com.example.oo_backend.user.entity.UserStatus;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Set;

@@ -3,6 +3,7 @@ package com.example.oo_backend.user.service;
 import com.example.oo_backend.user.dto.SignupRequest;
 import com.example.oo_backend.user.dto.LoginRequest;
 import com.example.oo_backend.user.entity.User;
+import com.example.oo_backend.user.entity.UserStatus;
 import com.example.oo_backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,6 +38,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setPhone(request.getPhone());
         user.setBirth(request.getBirth());
+        user.setStatus(UserStatus.ACTIVE);
 
         return userRepository.save(user);
     }
@@ -48,6 +50,10 @@ public class UserService {
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        if (user.getStatus() == UserStatus.SUSPENDED) {
+            throw new IllegalStateException("제한된 계정입니다.");
         }
 
         Map<String, Object> response = new HashMap<>();
