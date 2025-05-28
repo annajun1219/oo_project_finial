@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8a1bbb2-d274-4f86-9c07-a00aa894cccf" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +21,9 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$/OO_Backend">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -56,12 +60,12 @@
     &quot;assignee&quot;: &quot;annajun1219&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/annajun1219/objectoriented_backend.git&quot;,
-    &quot;accountId&quot;: &quot;9567846d-f0e7-42a4-9ead-7e47b93a87bf&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/22jiwon/ObjectOrientedTeamProject.git",
+    "accountId": "9567846d-f0e7-42a4-9ead-7e47b93a87bf"
   }
-}</component>
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -98,7 +102,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "Docker",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -140,6 +144,7 @@
       <workItem from="1748183149687" duration="3826000" />
       <workItem from="1748260021392" duration="1106000" />
       <workItem from="1748320597453" duration="1085000" />
+      <workItem from="1748427219492" duration="2850000" />
     </task>
     <servers />
   </component>
