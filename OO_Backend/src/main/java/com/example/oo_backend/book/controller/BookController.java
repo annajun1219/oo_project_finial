@@ -37,6 +37,7 @@ public class BookController {
     public ResponseEntity<List<BookPreviewDto>> getBooksByDepartment(@RequestParam String department) {
         return ResponseEntity.ok(bookService.getBooksByDepartment(department));
     }
+    
 
     @GetMapping("/search-by-professor")
     public ResponseEntity<List<BookPreviewDto>> searchByProfessor(@RequestParam String keyword, @RequestParam String category) {
