@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8a1bbb2-d274-4f86-9c07-a00aa894cccf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +61,7 @@
 }</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/22jiwon/ObjectOrientedTeamProject.git",
+    "url": "https://github.com/annajun1219/oo_project_finial",
     "accountId": "9567846d-f0e7-42a4-9ead-7e47b93a87bf"
   }
 }]]></component>
@@ -90,6 +89,7 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.OoBackendApplication.executor": "Run",
     "git-widget-placeholder": "backend",
     "kotlin-language-version-configured": "true",
@@ -144,7 +144,7 @@
       <workItem from="1748183149687" duration="3826000" />
       <workItem from="1748260021392" duration="1106000" />
       <workItem from="1748320597453" duration="1085000" />
-      <workItem from="1748427219492" duration="2850000" />
+      <workItem from="1748427219492" duration="9916000" />
     </task>
     <servers />
   </component>
