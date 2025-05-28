@@ -2,27 +2,64 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="oo_frontend"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Oo_frontend"
+        android:theme="@style/Theme.oo_frontend."
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="31">
+
+        <!-- 런처 액티비티 -->
         <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Oo_frontend">
+            android:name=".UI.LogoActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Auth -->
+        <activity android:name=".UI.auth.LoginActivity" />
+        <activity android:name=".UI.auth.Signup1Activity" />
+        <activity android:name=".UI.auth.Signup2Activity" />
+
+        <!-- Chat -->
+        <activity android:name=".UI.chat.list.ChatListActivity" />
+        <activity android:name=".UI.chat.room.ChatRoomActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".UI.chat.room.ChatActivity" />
+
+        <!-- Main -->
+        <activity android:name=".UI.main.MainActivity" />
+
+        <!-- Book -->
+        <activity android:name=".UI.main.book.BookListAllActivity" />
+        <activity android:name=".UI.main.book.BookListByCategoryActivity" />
+        <activity android:name=".UI.main.book.BookDetailActivity" />
+        <activity android:name=".UI.main.book.BookRegisterActivity" />
+
+        <!-- Category -->
+        <!-- (Fragment는 등록 불필요) -->
+
+        <!-- Recommendation -->
+        <activity android:name=".UI.main.recommendation.BookRecommendActivity" />
+
+        <!-- MyPage -->
+        <activity android:name=".UI.mypage.MyPageActivity" />
+        <activity android:name=".UI.mypage.buy.BuyHistoryActivity" />
+        <activity android:name=".UI.mypage.favorite.FavoritesActivity" />
+        <activity android:name=".UI.mypage.review.ReviewActivity" />
+        <activity android:name=".UI.mypage.sales.SalesHistoryActivity" />
+
     </application>
 
 </manifest>

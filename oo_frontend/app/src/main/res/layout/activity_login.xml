@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#FFFFFF"
+    android:padding="24dp">
+
+    <!-- 로그인 전체 박스 영역 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <!-- 책 이미지 -->
+        <ImageView
+            android:id="@+id/bookImage"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:src="@drawable/book2"
+            android:layout_marginBottom="32dp"
+            android:scaleType="fitCenter"/>
+
+        <!-- 이메일 입력 -->
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="이메일"
+            android:textColorHint="#999999"
+            android:backgroundTint="#999999"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- 비밀번호 입력 -->
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호"
+            android:textColorHint="#999999"
+            android:backgroundTint="#999999"
+            android:inputType="textPassword"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- 로그인 버튼 -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="로그인"
+            android:textColor="#000000"
+            android:background="@drawable/login_button"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- 하단 텍스트 -->
+        <TextView
+            android:id="@+id/textLinks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디찾기 | 비밀번호 찾기 | 회원가입"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </LinearLayout>
+</LinearLayout>

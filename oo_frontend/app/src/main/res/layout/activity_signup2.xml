@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="24dp">
+
+
+    <!-- 화면 상단 제목 "회원가입" -->
+    <TextView
+        android:id="@+id/tv_signup_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원가입"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="10dp"/>
+
+
+
+    <!-- 단계 UI -->
+    <LinearLayout
+        android:id="@+id/layout_steps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_below="@id/tv_signup_title"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp">
+
+        <!-- 단계 1 (현재 단계) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/step_circle_selected"
+                android:text="✔"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:elevation="4dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="완료"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp"
+                android:textColor="#888888" />
+        </LinearLayout>
+
+        <!-- 점선 연결 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="  . . .  "
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_marginBottom="18dp"
+            android:textColor="#888888"
+            android:layout_marginEnd="8dp" />
+
+        <!-- 단계 2 (다음 단계) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/step_circle_selected"
+                android:text="2"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="프로필"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 입력 폼 -->
+    <ScrollView
+        android:id="@+id/formScroll"
+        android:layout_width="match_parent"
+        android:layout_height="316dp"
+        android:layout_above="@id/buttonNext"
+        android:layout_below="@id/layout_steps"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!-- 프로필 사진 등록 -->
+            <FrameLayout
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginBottom="32dp">
+
+                <ImageView
+                    android:id="@+id/imageProfile"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_circle_white"
+                    android:elevation="3dp" />
+
+                <ImageView
+                    android:id="@+id/btnAddPhoto"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:elevation="3dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/ic_camera"
+                    android:background="@drawable/step_circle_selected"
+                    android:padding="10dp" />
+            </FrameLayout>
+
+            <!-- 닉네임 입력 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="닉네임"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
+
+                <EditText
+                    android:id="@+id/editNickname"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="48dp"
+                    android:hint="닉네임 입력"
+                    android:background="@drawable/rounded_input"
+                    android:paddingHorizontal="16dp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonCheckId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/login_button"
+                    android:text="중복 확인"
+                    android:textColor="#000000"
+                    android:textStyle="bold"/>
+
+
+
+            </LinearLayout>
+
+            <!-- 생년 월일 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="생년 월일"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
+
+                <!-- ✅ 버튼을 왼쪽에 -->
+                <ImageButton
+                    android:id="@+id/btn_select_date"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_calendar"
+                    android:background="@drawable/step_circle_selected"
+                    android:scaleType="centerInside"
+                    android:contentDescription="날짜 선택"
+                    android:layout_marginEnd="12dp"
+                    android:padding="10dp" />
+
+
+                <!-- ✅ 텍스트뷰를 오른쪽에 -->
+                <EditText
+                    android:id="@+id/tv_selected_date"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="날짜 선택"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="#888888"
+                    android:background="@drawable/rounded_input" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonNext"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="23dp"
+        android:layout_marginRight="23dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/login_button"
+        android:text="완료"
+        android:textColor="#000000"
+        android:textStyle="bold" />
+
+</RelativeLayout>

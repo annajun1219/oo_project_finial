@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="8dp">
+
+    <!-- 카테고리 아이콘 -->
+    <ImageView
+        android:id="@+id/categoryIcon"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_liberal_1"
+        android:contentDescription="카테고리 아이콘" />
+
+    <!-- 임시 아이콘 (나중에 코드로 변경됨) -->
+
+    <!-- 카테고리 텍스트 -->
+    <TextView
+        android:id="@+id/categoryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="문과대학"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_marginTop="6dp" />
+</LinearLayout>

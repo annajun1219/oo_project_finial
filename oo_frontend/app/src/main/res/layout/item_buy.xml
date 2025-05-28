@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
+    android:background="@drawable/sales_card_border">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <!-- 날짜 + 체크박스 + 화살표를 한 줄에 수평 정렬 -->
+        <LinearLayout
+            android:id="@+id/top_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="2025-05-08"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_right"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- 날짜 아래 회색 구분선 -->
+        <View
+            android:id="@+id/divider_under_date"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/top_row"
+            android:background="#DDDDDD" />
+
+        <!-- 책 이미지 -->
+        <ImageView
+            android:id="@+id/iv_book"
+            android:layout_width="83dp"
+            android:layout_height="84dp"
+            android:layout_below="@id/divider_under_date"
+            android:layout_marginTop="12dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sample_book" />
+
+        <!-- 제목 + 가격 -->
+        <LinearLayout
+            android:id="@+id/text_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider_under_date"
+            android:layout_toEndOf="@id/iv_book"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15,000원"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="객체지향프로그래밍 팔아요"
+                android:textSize="15sp"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <!-- 상태 버튼 -->
+        <LinearLayout
+            android:id="@+id/status_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_book"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_review"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="@drawable/brown_button"
+                android:text="후기남기기"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:layout_marginRight="5dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_status"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="판매중"
+                android:textSize="15sp"
+                android:textColor="#000000"
+                android:background="@drawable/login_button" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

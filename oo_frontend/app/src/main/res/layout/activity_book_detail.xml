@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- 뒤로가기 버튼 -->
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="12dp"
+        android:src="@drawable/ic_back"
+        android:background="@android:color/transparent"
+        android:contentDescription="뒤로가기" />
+
+    <!-- 이미지 슬라이더 영역 -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/imageSlider"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_below="@id/backButton" />
+
+    <ImageView
+        android:id="@+id/bookMainImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_book_placeholder" />
+
+
+    <!-- 페이지 수 표시 -->
+    <TextView
+        android:id="@+id/imageIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageSlider"
+        android:layout_alignParentStart="true"
+        android:layout_margin="8dp"
+        android:text="1/5"
+        android:textColor="#888888"
+        android:textSize="12sp" />
+
+    <!-- 교재 상태 뱃지 -->
+    <TextView
+        android:id="@+id/bookStatusBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/imageIndicator"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="12dp"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:text="판매중"
+        android:textSize="12sp"
+        android:textColor="#000000"
+        android:background="#EEEEEE"
+        android:gravity="center" />
+
+    <!-- 교재 정보 스크롤 -->
+    <ScrollView
+        android:id="@+id/detailScroll"
+        android:layout_below="@id/imageIndicator"
+        android:layout_above="@+id/sellerSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <!-- 교재 제목 + 찜 버튼 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/bookTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="객체지향 프로그래밍"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/bookLikeIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_heart_outline"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="찜" />
+            </RelativeLayout>
+
+            <!-- ⬇️ 교재 정가 -->
+            <TextView
+                android:id="@+id/textOriginalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="4dp"
+                android:text="정가 28,000원"
+                android:textColor="#999999"
+                android:textSize="14sp"
+                android:layout_marginStart="4dp" />
+
+            <!-- 가격/할인율/시세 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+
+                <!-- 할인율 -->
+                <TextView
+                    android:id="@+id/discountRate"
+                    android:layout_width="40dp"
+                    android:layout_height="38dp"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/bg_market_circle"
+                    android:gravity="center"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
+                    android:text="46%"
+                    android:textColor="#FF0000"
+                    android:textSize="12sp"
+                    android:textStyle="bold"/>
+
+                <!-- 판매가 -->
+                <TextView
+                    android:id="@+id/salePrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/discountRate"
+                    android:layout_centerVertical="true"
+                    android:text="15,000원"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <!-- 시세 -->
+                <TextView
+                    android:id="@+id/marketPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="시세 15,284원"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_market_circle"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp" />
+            </RelativeLayout>
+
+
+            <!-- 태그: 카테고리, 교수명 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/categoryTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="공과대학"
+                    android:background="#EEEEEE"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/professorTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="김스베틀라나"
+                    android:background="#EEEEEE"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:layout_marginStart="8dp"
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+            <!-- 교재 설명 -->
+            <TextView
+                android:id="@+id/bookDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="교재 설명 텍스트 영역입니다..."
+                android:textSize="14sp"
+                android:textColor="#444444" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 판매자 정보 + 신고 아이콘 + 문의 버튼 -->
+    <LinearLayout
+        android:id="@+id/sellerSection"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_above="@+id/bottomNavigationView"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        android:gravity="center_vertical"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/circle"
+            android:layout_marginEnd="12dp" />
+
+        <LinearLayout
+            android:layout_width="122dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/sellerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이기연"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/sellerRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⭐ 5.00 | 후기 2"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/reportButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/report_button"
+            android:background="@android:color/transparent"
+            android:contentDescription="신고하기"
+            android:layout_marginEnd="8dp" />
+
+        <android.widget.Button
+            android:id="@+id/inquiryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="문의하기"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:background="#E3EBB7"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:elevation="2dp" />
+    </LinearLayout>
+
+    <!-- 하단 네비게이션 바 -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconSize="50dp"
+        app:labelVisibilityMode="unlabeled"
+        app:itemIconTint="@color/bottom_nav_color_selector"
+        app:itemTextColor="@color/bottom_nav_color_selector" />
+
+</RelativeLayout>

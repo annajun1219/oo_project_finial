@@ -1,0 +1,6 @@
+<!-- res/drawable/keyword_item_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#f1efed" />
+    <corners android:radius="10dp" />
+</shape>
