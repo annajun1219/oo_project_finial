@@ -12,7 +12,7 @@ import java.util.List;
 public class MyPageResponseDto {
 
     private Long userId;
-    private String nickname;
+    private String name;
     private String profileImage;
     private double rating;
     private int saleCount;

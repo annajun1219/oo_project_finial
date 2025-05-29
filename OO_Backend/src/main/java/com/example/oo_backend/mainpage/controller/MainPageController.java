@@ -22,7 +22,7 @@ public class MainPageController {
     public ResponseEntity<MainPageResponseDto> getMainPage(@RequestParam Long userId) {
 
         // 1. 사용자 이름
-        String nickname = userService.getUserName(userId);
+        String name = userService.getUserName(userId);
 
         // 2. 카테고리 리스트
         List<String> categories = List.of(
@@ -36,7 +36,7 @@ public class MainPageController {
         BookPreviewDto recommendation = recommendedBooks.isEmpty() ? null : recommendedBooks.get(0);
 
         return ResponseEntity.ok(MainPageResponseDto.builder()
-                .nickname(nickname)
+                .name(name)
                 .categories(categories)
                 .recommendation(recommendation)
                 .build());

@@ -58,7 +58,7 @@ public class MyPageServiceImpl implements MyPageService {
 
         return MyPageResponseDto.builder()
                 .userId(user.getUserId())
-                .nickname(user.getName())
+                .name(user.getName())
                 .profileImage(user.getProfileImage())
                 .rating(rating)
                 .saleCount(saleCount)
