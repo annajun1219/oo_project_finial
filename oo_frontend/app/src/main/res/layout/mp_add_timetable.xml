@@ -8,13 +8,15 @@
         android:id="@+id/editSubject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="과목명 입력" />
+        android:hint="과목명 입력"
+        />
 
     <EditText
         android:id="@+id/editProfessor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="교수명 입력" />
+        android:hint="교수명 입력"
+        />
 
     <Spinner
         android:id="@+id/spinnerDay"
