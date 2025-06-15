@@ -66,7 +66,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             int userId = prefs.getInt("userId", -1);
             if (userId == -1) return;
 
-            RetrofitHelper.deleteFavorite(context, userId, selectedItem.bookId, new ApiCallback<Void>() {
+            RetrofitHelper.deleteFavorite(context, (long) userId, (long) selectedItem.bookId, new ApiCallback<Void>() {
                 @Override
                 public void onSuccess(Void data) {
                     list.remove(pos);

@@ -3,6 +3,7 @@ package com.example.oo_frontend.Network;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.example.oo_frontend.Model.ScheduleDto;
 import com.example.oo_frontend.Model.Login;
 import com.example.oo_frontend.Model.MyPage;
 import com.example.oo_frontend.Model.Signup;
@@ -132,7 +133,7 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 조회
-    public static void getMyPage(Context context, int userId, final com.example.oo_frontend.Network.ApiCallback<MyPage> callback) {
+    public static void getMyPage(Context context, Long userId, final com.example.oo_frontend.Network.ApiCallback<MyPage> callback) {
         RetrofitService apiService = getApiService();
 
         apiService.getMyPage(userId).enqueue(new Callback<MyPage>() {
@@ -153,10 +154,10 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 시간표 업로드
-    public static void uploadSchedule(Context context, int userId, List<String> scheduleSummary, final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
-        RetrofitService apiService = getApiService();
+    public static void uploadScheduleItem(Context context, ScheduleDto dto, final ApiCallback<Void> callback) {
+        RetrofitService api = getApiService();
 
-        apiService.uploadSchedule(userId, scheduleSummary).enqueue(new Callback<Void>() {
+        api.uploadSchedule(dto).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -175,7 +176,7 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 판매 내역 조회
-    public static void getSales(Context context, int userId, final com.example.oo_frontend.Network.ApiCallback<List<SaleItem>> callback) {
+    public static void getSales(Context context, Long userId, final com.example.oo_frontend.Network.ApiCallback<List<SaleItem>> callback) {
         RetrofitService api = getApiService();
         api.getSales(userId).enqueue(new Callback<List<SaleItem>>() {
             @Override
@@ -195,7 +196,7 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 판매 내역 -> 상태 변경
-    public static void updateSaleStatus(Context context, int userId, int bookId, String status, final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
+    public static void updateSaleStatus(Context context, Long userId, Long bookId, String status, final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
         RetrofitService api = getApiService();
         api.updateSaleStatus(userId, bookId, status).enqueue(new Callback<Void>() {
             @Override
@@ -216,7 +217,7 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 구매 내역 조회
-    public static void getPurchaseHistory(Context context, int userId, final com.example.oo_frontend.Network.ApiCallback<List<PurchaseItem>> callback) {
+    public static void getPurchaseHistory(Context context, Long userId, final com.example.oo_frontend.Network.ApiCallback<List<PurchaseItem>> callback) {
         RetrofitService api = getApiService();
 
         api.getPurchaseHistory(userId).enqueue(new Callback<List<PurchaseItem>>() {
@@ -237,7 +238,7 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 찜목록 조회
-    public static void getFavorites(Context context, int userId, final com.example.oo_frontend.Network.ApiCallback<List<FavoriteItem>> callback) {
+    public static void getFavorites(Context context, Long userId, final com.example.oo_frontend.Network.ApiCallback<List<FavoriteItem>> callback) {
         RetrofitService api = getApiService();
         api.getFavoriteList(userId).enqueue(new Callback<List<FavoriteItem>>() {
             @Override
@@ -257,7 +258,7 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 찜목록 삭제
-    public static void deleteFavorite(Context context, int userId, int bookId, final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
+    public static void deleteFavorite(Context context, Long userId, Long bookId, final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
         RetrofitService api = getApiService();
 
         api.deleteFavorite(userId, bookId).enqueue(new Callback<Void>() {

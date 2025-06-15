@@ -51,7 +51,7 @@ public class SalesHistoryActivity extends AppCompatActivity {
         }
 
         // ✅ 서버에서 판매내역 불러오기
-        RetrofitHelper.getSales(this, userId, new ApiCallback<List<SaleItem>>() {
+        RetrofitHelper.getSales(this, (long) userId, new ApiCallback<List<SaleItem>>() {
             @Override
             public void onSuccess(List<SaleItem> data) {
                 salesList = data;
@@ -83,7 +83,7 @@ public class SalesHistoryActivity extends AppCompatActivity {
     private void updateSelectedItemsStatus(String newStatus) {
         for (SaleItem item : salesList) {
             if (item.isSelected) {
-                RetrofitHelper.updateSaleStatus(this, userId, item.bookId, newStatus, new ApiCallback<Void>() {
+                RetrofitHelper.updateSaleStatus(this, (long) userId, (long) item.bookId, newStatus, new ApiCallback<Void>() {
                     @Override
                     public void onSuccess(Void data) {
                         item.status = newStatus;

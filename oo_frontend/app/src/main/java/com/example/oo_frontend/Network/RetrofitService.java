@@ -1,5 +1,6 @@
 package com.example.oo_frontend.Network;
 
+import com.example.oo_frontend.Model.ScheduleDto;
 import com.example.oo_frontend.Model.Signup;
 import com.example.oo_frontend.Model.Login;
 import com.example.oo_frontend.Model.User;
@@ -47,39 +48,37 @@ public interface RetrofitService {
 
     // ✅ 마이페이지 정보 조회 (프로필, 카운트, 시간표 등)
     @GET("/api/mypage")
-    Call<MyPage> getMyPage(@Header("userId") int userId);
+    Call<MyPage> getMyPage(@Header("userId") Long userId);
 
     // ✅ 마이페이지 -> 시간표 업로드
-    @POST("/api/mypage/schedule")
-    Call<Void> uploadSchedule(
-            @Header("userId") int userId,
-            @Body List<String> scheduleSummary
-    );
+    @POST("/api/schedule")
+    Call<Void> createSchedule(@Body ScheduleDto schedule);
+
     // ✅ 마이페이지 -> 판매내역
     @GET("/api/sales")
-    Call<List<SaleItem>> getSales(@Header("userId") int userId);
+    Call<List<SaleItem>> getSales(@Header("userId") Long userId);
 
     // ✅ 마이페이지 -> 판매내역 -> 상태 변경 관련
     @PATCH("/api/sales/{bookId}/status")
     Call<Void> updateSaleStatus(
-            @Header("userId") int userId,
-            @Path("bookId") int bookId,
+            @Header("userId") Long userId,
+            @Path("bookId") Long bookId,
             @Query("status") String status
     );
 
     // ✅ 마이페이지 -> 구매내역 조회
     @GET("/api/purchases")
-    Call<List<PurchaseItem>> getPurchaseHistory(@Header("userId") int userId);
+    Call<List<PurchaseItem>> getPurchaseHistory(@Header("userId") Long userId);
 
     // ✅ 마이페이지 -> 찜목록
     @GET("/api/favorites")
-    Call<List<FavoriteItem>> getFavoriteList(@Header("userId") int userId);
+    Call<List<FavoriteItem>> getFavoriteList(@Header("userId") Long userId);
     @POST("/api/favorites/{bookId}")
-    Call<Void> addFavorite(@Header("userId") int userId, @Path("bookId") int bookId);
+    Call<Void> addFavorite(@Header("userId") Long userId, @Path("bookId") Long bookId);
     @DELETE("/api/favorites/{bookId}") //찜 삭제
     Call<Void> deleteFavorite(
-            @Header("userId") int userId,
-            @Path("bookId") int bookId
+            @Header("userId") Long userId,
+            @Path("bookId") Long bookId
     );
 
     // ✅ 마이페이지 -> 리뷰
@@ -98,8 +97,6 @@ public interface RetrofitService {
     @GET("/api/main")
     Call<JsonObject> getMainPageRaw(@Query("userId") int userId);
 
-    @POST("/api/mypage/schedule")
-    Call<Void> postSchedule(@Body String scheduleText);
 
     @Multipart
     @POST("/api/books/register")

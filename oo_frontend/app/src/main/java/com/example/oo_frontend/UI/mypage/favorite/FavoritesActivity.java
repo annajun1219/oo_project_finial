@@ -43,7 +43,7 @@ public class FavoritesActivity extends AppCompatActivity {
         int userId = prefs.getInt("userId", -1);
         if (userId == -1) return;
 
-        RetrofitHelper.getFavorites(this, userId, new ApiCallback<List<FavoriteItem>>() {
+        RetrofitHelper.getFavorites(this, (long) userId, new ApiCallback<List<FavoriteItem>>() {
             @Override
             public void onSuccess(List<FavoriteItem> data) {
                 favoriteList.clear();
