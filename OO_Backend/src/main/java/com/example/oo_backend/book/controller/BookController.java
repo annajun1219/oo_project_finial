@@ -8,6 +8,7 @@ import com.example.oo_backend.book.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,10 +20,14 @@ public class BookController {
     private final BookService bookService;
 
     @PostMapping("/register")
-    public ResponseEntity<BookRegisterResponse> registerBook(@RequestBody BookRegisterRequest request) {
-        BookRegisterResponse response = bookService.registerBook(request);
+    public ResponseEntity<BookRegisterResponse> registerBook(
+            @RequestPart("book") BookRegisterRequest request,
+            @RequestPart("image") MultipartFile image
+    ) {
+        BookRegisterResponse response = bookService.registerBook(request, image);
         return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/{productId}")
     public ResponseEntity<BookDetailResponse> getBookDetail(

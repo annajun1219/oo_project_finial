@@ -20,6 +20,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Set;
 import java.util.HashSet;
+import java.io.File;
+import java.io.IOException;
+
+import org.springframework.web.multipart.MultipartFile;
+
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +35,7 @@ public class BookServiceImpl implements BookService {
     private final ScheduleRepository scheduleRepository;
 
     @Override
-    public BookRegisterResponse registerBook(BookRegisterRequest request) {
+    public BookRegisterResponse registerBook(BookRegisterRequest request, MultipartFile image) {
         User user = userRepository.findById(request.getSellerId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
@@ -42,9 +47,23 @@ public class BookServiceImpl implements BookService {
                 .price(request.getPrice())
                 .description(request.getDescription())
                 .sellerId(request.getSellerId())
-                .imageUrl(request.getImageUrl())  // 선택적 필드
                 .status("판매중")                 // 초기 상태 설정
                 .build();
+
+        // 이미지 저장
+        if (image != null && !image.isEmpty()) {
+            try {
+                String uploadDir = "book-images/";
+                String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+                File dest = new File(uploadDir + fileName);
+                dest.getParentFile().mkdirs(); // 디렉토리 생성
+                image.transferTo(dest);
+
+                book.setImageUrl("/images/" + fileName); // URL 경로로 저장
+            } catch (IOException e) {
+                throw new RuntimeException("이미지 저장 실패", e);
+            }
+        }
 
         bookRepository.save(book);
 

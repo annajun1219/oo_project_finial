@@ -13,6 +13,5 @@ public class BookRegisterRequest {
     private int officialPrice;
     private int price;
     private String description;
-    private String imageUrl;
 }
 

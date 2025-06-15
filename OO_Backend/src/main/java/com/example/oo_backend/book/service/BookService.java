@@ -4,11 +4,13 @@ import com.example.oo_backend.book.dto.BookDetailResponse;
 import com.example.oo_backend.book.dto.BookRegisterRequest;
 import com.example.oo_backend.book.dto.BookRegisterResponse;
 import com.example.oo_backend.book.dto.BookPreviewDto;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.List;
 
 public interface BookService {
-    BookRegisterResponse registerBook(BookRegisterRequest request);
+    BookRegisterResponse registerBook(BookRegisterRequest request, MultipartFile image);
 
     // 🔽 이 줄을 추가하세요
     BookDetailResponse getBookDetail(Long productId, Long viewerId);
