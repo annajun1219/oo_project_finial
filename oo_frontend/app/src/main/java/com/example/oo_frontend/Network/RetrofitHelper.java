@@ -507,9 +507,10 @@ public class RetrofitHelper {
         });
     }
 
-    public static void fetchChatRooms(Context context, final com.example.oo_frontend.Network.ApiCallback<List<ChatRoom>> callback) {
-        RetrofitService service = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
-        Call<List<ChatRoom>> call = service.getChatRoomList();
+    // ✅ 채팅방 목록 불러오기
+    public static void fetchChatRooms(Context context, Long userId, final ApiCallback<List<ChatRoom>> callback) {
+        RetrofitService service = RetrofitClient.getClient().create(RetrofitService.class);
+        Call<List<ChatRoom>> call = service.getChatRoomList(userId);
 
         call.enqueue(new Callback<List<ChatRoom>>() {
             @Override
@@ -529,9 +530,9 @@ public class RetrofitHelper {
     }
 
     // ✅ 채팅 메시지 목록 불러오기
-    public static void fetchChatMessages(Context context, String roomId, String userId,
-                                         final com.example.oo_frontend.Network.ApiCallback<List<ChatMessage>> callback) {
-        RetrofitService service = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
+    public static void fetchChatMessages(Context context, Long roomId, Long userId,
+                                         ApiCallback<List<ChatMessage>> callback) {
+        RetrofitService service = RetrofitClient.getClient().create(RetrofitService.class);
         service.getChatMessages(roomId, userId).enqueue(new Callback<List<ChatMessage>>() {
             @Override
             public void onResponse(Call<List<ChatMessage>> call, Response<List<ChatMessage>> response) {
@@ -549,10 +550,10 @@ public class RetrofitHelper {
         });
     }
 
-    // ✅ 채팅 메시지 전송
-    public static void sendChatMessage(Context context, String userId, String roomId, String messageText,
-                                       final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
-        RetrofitService service = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
+    // ✅ 채팅 메시지 전송 (수정됨)
+    public static void sendChatMessage(Context context, Long userId, Long roomId, String messageText,
+                                       final ApiCallback<Void> callback) {
+        RetrofitService service = RetrofitClient.getClient().create(RetrofitService.class);
 
         Map<String, String> body = new HashMap<>();
         body.put("message", messageText);
@@ -573,7 +574,6 @@ public class RetrofitHelper {
             }
         });
     }
-
 
 
 }

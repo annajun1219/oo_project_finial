@@ -126,21 +126,21 @@ public interface RetrofitService {
     @GET("/api/recommendations")
     Call<List<Recommendation>> getBySchedule(@Query("userId") int userId);
 
-    @GET("/chatrooms")
-    Call<List<ChatRoom>> getChatRoomList();  // 토큰 없이 호출
+    @GET("/api/chatrooms")
+    Call<List<ChatRoom>> getChatRoomList(@Header("userId") Long userId);  // 토큰 없이 호출
 
     // ✅ 1:1 채팅 메시지 목록 조회 (userId 헤더 사용)
     @GET("/api/chatrooms/{roomId}/messages")
     Call<List<ChatMessage>> getChatMessages(
-            @Path("roomId") String roomId,
-            @Header("userId") String userId
+            @Path("roomId") Long roomId,
+            @Header("userId") Long userId
     );
 
     // ✅ 채팅 메시지 전송
     @POST("/api/chatrooms/{roomId}/messages")
     Call<Void> sendMessageToChatRoom(
-            @Header("userId") String userId,
-            @Path("roomId") String roomId,
+            @Header("userId") Long userId,
+            @Path("roomId") Long roomId,
             @Body Map<String, String> messageBody
     );
 

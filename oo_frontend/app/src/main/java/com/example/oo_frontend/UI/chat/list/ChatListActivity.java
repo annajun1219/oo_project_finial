@@ -32,7 +32,8 @@ public class ChatListActivity extends AppCompatActivity {
         chatListView = findViewById(R.id.chatListView);
 
         // ✅ JWT 없이 채팅방 리스트 불러오기
-        RetrofitHelper.fetchChatRooms(this, new ApiCallback<List<ChatRoom>>() {
+        Long userId=2L;
+        RetrofitHelper.fetchChatRooms(this, userId, new ApiCallback<List<ChatRoom>>() {
             @Override
             public void onSuccess(List<ChatRoom> result) {
                 chatRooms = result;
@@ -52,6 +53,7 @@ public class ChatListActivity extends AppCompatActivity {
             Intent intent = new Intent(ChatListActivity.this, ChatRoomActivity.class);
             intent.putExtra("userName", selectedChat.getOtherUserName());
             intent.putExtra("roomId", selectedChat.getRoomId());
+            intent.putExtra("userId", userId);
             startActivity(intent);
         });
 
