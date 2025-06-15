@@ -102,7 +102,7 @@ public interface RetrofitService {
     Call<Void> postSchedule(@Body String scheduleText);
 
     @Multipart
-    @POST("/api/books")
+    @POST("/api/books/register")
     Call<Book> registerBook(
             @Part MultipartBody.Part image,
             @Part("title") RequestBody title,

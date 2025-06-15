@@ -28,12 +28,16 @@ import com.example.oo_frontend.UI.mypage.buy.BuyHistoryActivity;
 import com.example.oo_frontend.UI.mypage.favorite.FavoritesActivity;
 import com.example.oo_frontend.UI.mypage.review.ReviewActivity;
 import com.example.oo_frontend.UI.mypage.sales.SalesHistoryActivity;
+import com.example.oo_frontend.UI.main.MainActivity;
+import com.example.oo_frontend.UI.chat.list.ChatListActivity;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MyPageActivity extends AppCompatActivity {
 
@@ -68,11 +72,32 @@ public class MyPageActivity extends AppCompatActivity {
 
         loadMyPageData();   // ✅ 서버에서 유저 정보 로딩
         setClickEvents();   // ✅ 클릭 이벤트 설정
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_home) {
+                startActivity(new Intent(MyPageActivity.this, MainActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
+            } else if (id == R.id.nav_chat) {
+                startActivity(new Intent(MyPageActivity.this, ChatListActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
+            } else if (id == R.id.nav_profile) {
+                return true;
+            }
+            return false;
+        });
+
     }
 
     private void loadMyPageData() {
         // ✅ 저장된 userId 불러오기
-        SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("userId", -1);
 
         // ✅ userId가 없으면 에러 처리
@@ -191,8 +216,9 @@ public class MyPageActivity extends AppCompatActivity {
 
     // ✅ 서버에 시간표 업로드: userId + List<String> scheduleSummary
     private void uploadSchedule(List<String> scheduleSummary) {
-        SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
-        int userId = prefs.getInt("userId", -1); // 저장된 userId 불러오기
+        SharedPreferences prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("userId", -1);
+
 
         if (userId == -1) {
             Toast.makeText(this, "userId 없음", Toast.LENGTH_SHORT).show();
@@ -206,6 +232,8 @@ public class MyPageActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(MyPageActivity.this, "등록 완료", Toast.LENGTH_SHORT).show();
+
+                    loadMyPageData();
                 } else {
                     Toast.makeText(MyPageActivity.this, "등록 실패: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
@@ -248,13 +276,14 @@ public class MyPageActivity extends AppCompatActivity {
             String day = item.getDay();
             String subject = item.getSubject();
             int row = getPeriodFromTime(item.getStartTime());
-            int col = java.util.Arrays.asList("월요일", "화요일", "수요일", "목요일", "금요일").indexOf(day) + 1;
+            int col = getDayIndex(day);
             int index = row * 6 + col;
 
-            if (index < timetableGrid.getChildCount()) {
+            if (index < timetableGrid.getChildCount() && col > 0) {
                 TextView targetCell = (TextView) timetableGrid.getChildAt(index);
                 targetCell.setText(subject);
             }
+
         }
     }
 
@@ -268,4 +297,22 @@ public class MyPageActivity extends AppCompatActivity {
             default: return 1;
         }
     }
+
+    private int getDayIndex(String day) {
+        switch (day) {
+            case "월":
+            case "월요일": return 1;
+            case "화":
+            case "화요일": return 2;
+            case "수":
+            case "수요일": return 3;
+            case "목":
+            case "목요일": return 4;
+            case "금":
+            case "금요일": return 5;
+            default: return -1;
+        }
+    }
+
 }
+

@@ -84,7 +84,7 @@ public class BookRegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            long sellerId = getSharedPreferences("loginPrefs", MODE_PRIVATE).getInt("uid", -1);
+            long sellerId = getSharedPreferences("loginPrefs", MODE_PRIVATE).getInt("userId", -1);
             if (sellerId == -1) {
                 Toast.makeText(this, "로그인 정보가 없습니다.", Toast.LENGTH_SHORT).show();
                 return;

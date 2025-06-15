@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // ✅ 사용자 ID 가져오기
-        int userId = getSharedPreferences("loginPrefs", MODE_PRIVATE).getInt("uid", 1);
+        int userId = getSharedPreferences("loginPrefs", MODE_PRIVATE).getInt("userId", -1);
 
         // ✅ 사용자 이름 표시용 TextView (activity_main.xml에 id가 nameTextView인 요소 필요)
         nameTextView = findViewById(R.id.nameTextView);
@@ -66,11 +66,14 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("카테고리", categoryArray.get(i).getAsString());
                 }
 
-                // 추천 교재 정보
-                JsonObject rec = body.getAsJsonObject("recommendation");
-                String title = rec.get("title").getAsString();
-                int price = rec.get("price").getAsInt();
-                Log.d("추천 교재", title + " / " + price + "원");
+                if (body.has("recommendation") && !body.get("recommendation").isJsonNull()) {
+                    JsonObject rec = body.getAsJsonObject("recommendation");
+                    String title = rec.get("title").getAsString();
+                    int price = rec.get("price").getAsInt();
+                    Log.d("추천 교재", title + " / " + price + "원");
+                } else {
+                    Log.d("추천 교재", "추천 정보 없음");
+                }
             }
 
             @Override

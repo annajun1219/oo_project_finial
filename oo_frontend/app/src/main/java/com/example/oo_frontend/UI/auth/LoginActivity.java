@@ -82,7 +82,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     // 로그인 성공 시 사용자 정보 저장
                     SharedPreferences prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-                    prefs.edit().putInt("userId", result.getUserId()).apply();
+                    prefs.edit()
+                            .putInt("userId", result.getUserId())
+                            .putString("nickname", result.getNickname()) // 👈 추가!
+                            .apply();
 
                     Toast.makeText(getApplicationContext(), result.getNickname() + "님 로그인 성공!", Toast.LENGTH_SHORT).show();
 
