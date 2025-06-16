@@ -38,6 +38,10 @@ public interface RetrofitService {
     @GET("/api/users/check-email")
     Call<Boolean> checkEmail(@Query("email") String email);
 
+    //닉네임 중복확인
+    @GET("/api/users/check-name")
+    Call<Boolean> checkName(@Query("name") String name);
+
     // ✅ 회원가입 요청 (회원가입 2단계)
     @POST("/api/users/signup")
     Call<Login> signup(@Body Signup signup);

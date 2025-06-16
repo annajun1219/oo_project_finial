@@ -1,15 +1,15 @@
 package com.example.oo_frontend.Model;
 
 public class ScheduleDto {
-    private Long userId;
+    private User user;
     private String day;
     private String startTime;
     private String endTime;
     private String subject;
     private String professor;
 
-    public ScheduleDto(Long userId, String day, String startTime, String endTime, String subject, String professor) {
-        this.userId = userId;
+    public ScheduleDto(User user, String day, String startTime, String endTime, String subject, String professor) {
+        this.user = user;
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -18,12 +18,12 @@ public class ScheduleDto {
     }
 
     // 👇 꼭 필요한 userId getter/setter
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getDay() {

@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.gridlayout.widget.GridLayout;
 
+import com.example.oo_frontend.Model.User;
 import com.bumptech.glide.Glide;
 import com.example.oo_frontend.Model.ScheduleDto;
 import com.example.oo_frontend.Model.MyPage;
@@ -171,8 +172,18 @@ public class MyPageActivity extends AppCompatActivity {
                     scheduleItems.add(newItem);
                     showScheduleGrid(scheduleItems);
 
-                    // 🔹 서버 전송용 DTO 생성
-                    ScheduleDto dto = new ScheduleDto(userId, day, startTime, endTime, subject, professor);
+                    // 🔹 User 모델에 userId만 세팅
+                    User user = new User(userId.intValue());
+
+                    // 🔹 수정된 DTO 생성 (User 객체를 첫 인자로)
+                    ScheduleDto dto = new ScheduleDto(
+                            user,
+                            day,
+                            startTime,
+                            endTime,
+                            subject,
+                            professor
+                    );
 
                     // 🔹 Retrofit 업로드
                     RetrofitHelper.uploadScheduleItem(this, dto, new ApiCallback<Void>() {

@@ -9,7 +9,11 @@ public class User {
     private float rating;
 
     // 기본 생성자 (Gson이나 Firebase 등에서 필요)
-    public User() {
+    public User() { }
+
+    //userId만 받는 생성자
+    public User(int userId) {
+        this.userId=userId;
     }
 
     // 전체 필드를 초기화하는 생성자

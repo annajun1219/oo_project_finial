@@ -157,7 +157,7 @@ public class RetrofitHelper {
     public static void uploadScheduleItem(Context context, ScheduleDto dto, final ApiCallback<Void> callback) {
         RetrofitService api = getApiService();
 
-        api.uploadSchedule(dto).enqueue(new Callback<Void>() {
+        api.createSchedule(dto).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
