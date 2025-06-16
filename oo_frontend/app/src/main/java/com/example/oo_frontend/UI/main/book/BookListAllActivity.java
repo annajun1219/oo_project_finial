@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.oo_frontend.Model.SearchResultDto;
 import com.example.oo_frontend.UI.mypage.MyPageActivity;
 import com.example.oo_frontend.Model.Book;
 import com.example.oo_frontend.Network.*;
@@ -53,10 +54,38 @@ public class BookListAllActivity extends AppCompatActivity {
     private static final String PREF_RECENT = "recent_search";
     private static final String PREF_KEY = "keywords";
 
+    private RetrofitService retrofitService;
+    private Long userId;
+
+    private void handleSearchResponse(Response<List<SearchResultDto>> response, String keyword) {
+        if (response.isSuccessful() && response.body() != null) {
+            bookList.clear();
+            for (SearchResultDto dto : response.body()) {
+                bookList.add(dto.toBook());
+            }
+            bookAdapter.notifyDataSetChanged();
+            saveRecentKeyword(keyword);
+        } else {
+            Toast.makeText(BookListAllActivity.this, "검색 실패: " + response.code(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
+
+        // SharedPreferences에서 userId 가져오기
+        SharedPreferences prefs = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+        userId = (long) prefs.getInt("userId", -1); // int로 저장했기 때문에 long으로 변환
+        if (userId == -1L) {
+            Toast.makeText(this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Retrofit 객체 초기화
+        retrofitService = RetrofitHelper.getApiService();
+
 
         bookRecyclerView = findViewById(R.id.bookRecyclerView);
         bookRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -72,6 +101,60 @@ public class BookListAllActivity extends AppCompatActivity {
         searchByTitleButton = findViewById(R.id.searchByTitleButton);
         searchByProfessorButton = findViewById(R.id.searchByProfessorButton);
 
+        searchInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            // 🔍 검색어 입력 감지
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String keyword = s.toString().trim();
+
+                if (selectedType == SearchType.NONE) {
+                    Toast.makeText(BookListAllActivity.this, "검색 기준을 선택해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (keyword.isEmpty()) {
+                    getAllBooksFromServer();  // 비어있으면 전체 목록 다시 불러오기
+                    return;
+                }
+
+                String filter = selectedType == SearchType.TITLE ? "title" : "professor";
+
+                if ("title".equals(filter)) {
+                    retrofitService.searchByTitle(keyword, userId)
+                            .enqueue(new Callback<List<SearchResultDto>>() {
+                                @Override
+                                public void onResponse(Call<List<SearchResultDto>> call, Response<List<SearchResultDto>> response) {
+                                    handleSearchResponse(response, keyword);
+                                }
+
+                                @Override
+                                public void onFailure(Call<List<SearchResultDto>> call, Throwable t) {
+                                    Toast.makeText(BookListAllActivity.this, "네트워크 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    retrofitService.searchByProfessor(keyword, userId)
+                            .enqueue(new Callback<List<SearchResultDto>>() {
+                                @Override
+                                public void onResponse(Call<List<SearchResultDto>> call, Response<List<SearchResultDto>> response) {
+                                    handleSearchResponse(response, keyword);
+                                }
+
+                                @Override
+                                public void onFailure(Call<List<SearchResultDto>> call, Throwable t) {
+                                    Toast.makeText(BookListAllActivity.this, "네트워크 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
         // 🔘 검색 기준 선택
         searchByTitleButton.setOnClickListener(v -> {
             selectedType = SearchType.TITLE;
@@ -83,27 +166,7 @@ public class BookListAllActivity extends AppCompatActivity {
             highlightSelectedTab(searchByProfessorButton);
         });
 
-        // 🔍 검색어 입력 감지
-        searchInput.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void afterTextChanged(Editable s) {}
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String keyword = s.toString().trim();
-
-                if (selectedType == SearchType.NONE) {
-                    Toast.makeText(BookListAllActivity.this, "검색 기준을 선택해주세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                bookAdapter.filter(keyword, selectedType == SearchType.TITLE);
-
-                if (!keyword.isEmpty()) {
-                    saveRecentKeyword(keyword);
-                }
-            }
-        });
 
         // 4. 하단 네비게이션 바
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);

@@ -13,6 +13,7 @@ import com.example.oo_frontend.Model.Recommendation;
 import com.example.oo_frontend.Model.Book;
 import com.example.oo_frontend.Model.ChatRoom;
 import com.example.oo_frontend.Model.ChatMessage;
+import com.example.oo_frontend.Model.SearchResultDto;
 
 import java.util.List;
 import java.util.Map;
@@ -117,6 +118,18 @@ public interface RetrofitService {
 
     @GET("/api/books/{productId}")
     Call<Book> getBookDetail(@Path("productId") long productId);
+
+    @GET("/api/search/title")
+    Call<List<SearchResultDto>> searchByTitle(
+            @Query("keyword") String keyword,
+            @Query("userId") Long userId
+    );
+
+    @GET("/api/search/professor")
+    Call<List<SearchResultDto>> searchByProfessor(
+            @Query("keyword") String keyword,
+            @Query("userId") Long userId
+    );
 
     @GET("/api/books")
     Call<List<Book>> getAllBooks();
