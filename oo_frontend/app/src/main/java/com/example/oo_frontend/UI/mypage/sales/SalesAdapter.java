@@ -1,6 +1,6 @@
 package com.example.oo_frontend.UI.mypage.sales;
 
-import static com.example.oo_frontend.Network.RetrofitHelper.updateSaleStatus;
+import com.example.oo_frontend.Network.RetrofitHelper;
 
 import android.content.Context;
 import android.content.Intent;
@@ -107,7 +107,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.SalesViewHol
                 }
 
                 // transactionId 기반으로 상태 업데이트 요청
-                updateSaleStatus(holder.itemView.getContext(), userId, item.transactionId, "판매완료", new ApiCallback<Void>() {
+                RetrofitHelper.updateSaleStatus(holder.itemView.getContext(), userId, item.transactionId, "판매완료", new ApiCallback<Void>() {
                     @Override
                     public void onSuccess(Void result) {
                         item.status = "판매완료";

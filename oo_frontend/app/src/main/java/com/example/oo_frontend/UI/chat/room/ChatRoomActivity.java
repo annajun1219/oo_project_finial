@@ -1,6 +1,5 @@
 package com.example.oo_frontend.UI.chat.room;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.example.oo_frontend.Model.ChatMessage;
 import com.example.oo_frontend.Network.ApiCallback;
 import com.example.oo_frontend.Network.RetrofitHelper;
 import com.example.oo_frontend.R;
-import com.example.oo_frontend.UI.chat.room.ChatMessageAdapter;
 import com.example.oo_frontend.UI.chat.list.ChatListActivity;
 
 import java.util.ArrayList;
@@ -32,22 +30,20 @@ public class ChatRoomActivity extends AppCompatActivity {
     private EditText messageEditText;
     private ImageView sendButton;
     private TextView confirmTransactionButton;
-    private Long roomId; // ✅ String → Long
-    private Long userId; // ✅ int → Long
+    private Long roomId;
+    private Long userId;
     private Long bookId;
+    private Long sellerId;  // ✅ 필요 시 Glide 후 sellerId도 저장
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
-        // ✅ 채팅방 이름 및 사용자 정보
         roomId = getIntent().getLongExtra("roomId", -1L);
         bookId = getIntent().getLongExtra("bookId", -1L);
-
-
-        String userName = getIntent().getStringExtra("userName");
         userId = getIntent().getLongExtra("userId", -1L);
+        String userName = getIntent().getStringExtra("userName");
 
         if (roomId == -1L || userId == -1L || bookId == -1L) {
             Toast.makeText(this, "잘못된 접근입니다", Toast.LENGTH_SHORT).show();
@@ -55,15 +51,16 @@ public class ChatRoomActivity extends AppCompatActivity {
             return;
         }
 
+        TextView bookTitle = findViewById(R.id.bookTitle);
+        TextView bookPrice = findViewById(R.id.bookPrice);
+        ImageView bookImage = findViewById(R.id.bookImage);
+
         RetrofitHelper.fetchBookDetail(this, bookId, userId, new ApiCallback<Book>() {
             @Override
             public void onSuccess(Book book) {
-                TextView bookTitle = findViewById(R.id.bookTitle);
-                TextView bookPrice = findViewById(R.id.bookPrice);
-                ImageView bookImage = findViewById(R.id.bookImage);
-
                 bookTitle.setText(book.getTitle());
                 bookPrice.setText(book.getPrice() + "원");
+                sellerId = book.getSellerId();  // ✅ sellerId 저장
 
                 Glide.with(ChatRoomActivity.this)
                         .load(book.getImageUrl())
@@ -78,7 +75,6 @@ public class ChatRoomActivity extends AppCompatActivity {
             }
         });
 
-
         TextView titleView = findViewById(R.id.chatRoomTitle);
         titleView.setText(userName);
 
@@ -88,13 +84,11 @@ public class ChatRoomActivity extends AppCompatActivity {
             finish();
         });
 
-        // ✅ 메시지 리스트 초기화
         messageListView = findViewById(R.id.messageListView);
         messageList = new ArrayList<>();
-        adapter = new ChatMessageAdapter(this, messageList, userId.intValue()); // 여긴 int로 유지
+        adapter = new ChatMessageAdapter(this, messageList, userId.intValue());
         messageListView.setAdapter(adapter);
 
-        // ✅ 메시지 입력 및 전송
         messageEditText = findViewById(R.id.messageEditText);
         sendButton = findViewById(R.id.sendButton);
         sendButton.setOnClickListener(v -> {
@@ -105,14 +99,54 @@ public class ChatRoomActivity extends AppCompatActivity {
             }
         });
 
-        // ✅ 거래확정 버튼
         confirmTransactionButton = findViewById(R.id.confirmTransactionButton);
         confirmTransactionButton.setVisibility(View.VISIBLE);
         confirmTransactionButton.setOnClickListener(v -> {
-            Toast.makeText(this, "거래가 확정되었습니다.", Toast.LENGTH_SHORT).show();
+            if (sellerId == null) {
+                Toast.makeText(this, "판매자 정보를 불러오는 중입니다.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // ✅ 1단계: 거래 생성
+            RetrofitHelper.createTransaction(this, bookId, sellerId, userId, new ApiCallback<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(ChatRoomActivity.this, "거래 생성 완료!", Toast.LENGTH_SHORT).show();
+
+                    // ✅ 2단계: 거래 ID 조회
+                    RetrofitHelper.getTransactionId(ChatRoomActivity.this, bookId, sellerId, userId, new ApiCallback<Long>() {
+                        @Override
+                        public void onSuccess(Long transactionId) {
+
+                            // ✅ 3단계: 상태 업데이트
+                            RetrofitHelper.updateSaleStatus(ChatRoomActivity.this, sellerId, transactionId, "예약중", new ApiCallback<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(ChatRoomActivity.this, "예약중으로 상태 변경 완료", Toast.LENGTH_SHORT).show();
+                                    confirmTransactionButton.setEnabled(false);
+                                }
+
+                                @Override
+                                public void onFailure(String errorMessage) {
+                                    Toast.makeText(ChatRoomActivity.this, "상태 변경 실패: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(String errorMessage) {
+                            Toast.makeText(ChatRoomActivity.this, "거래 ID 조회 실패: " + errorMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    Toast.makeText(ChatRoomActivity.this, "거래 생성 실패: " + errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
-        // ✅ 서버에서 메시지 불러오기
         loadMessages();
     }
 
@@ -137,7 +171,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         RetrofitHelper.sendChatMessage(this, userId, roomId, messageText, new ApiCallback<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                loadMessages(); // 전송 성공 후 새로고침
+                loadMessages();
             }
 
             @Override

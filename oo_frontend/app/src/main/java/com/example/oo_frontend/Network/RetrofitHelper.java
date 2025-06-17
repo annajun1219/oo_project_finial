@@ -216,14 +216,15 @@ public class RetrofitHelper {
 
 
     // ✅ 마이페이지 -> 판매 내역 -> 상태 변경
-    public static void updateSaleStatus(Context context, Long userId, Long transactionId, String status, ApiCallback<Void> callback) {
-        RetrofitService api = getApiService();
-        api.updateSaleStatus(userId, transactionId, status).enqueue(new Callback<Void>() {
+    public static void updateSaleStatus(Context context, long userId, long transactionId, String status, ApiCallback<Void> callback) {
+        RetrofitService api = getClient().create(RetrofitService.class);
+        Call<Void> call = api.updateTransactionStatus(transactionId, status);
+
+        call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     callback.onSuccess(null);
-                    Toast.makeText(context, "거래 상태가 '" + status + "'(으)로 업데이트되었습니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     callback.onFailure("상태 변경 실패: " + response.code());
                 }
@@ -231,10 +232,53 @@ public class RetrofitHelper {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                callback.onFailure("서버 오류: " + t.getMessage());
+                callback.onFailure("네트워크 오류: " + t.getMessage());
             }
         });
     }
+
+    public static void createTransaction(Context context, Long bookId, Long sellerId, Long buyerId, ApiCallback<Void> callback) {
+        RetrofitService service = getClient().create(RetrofitService.class);
+        Call<Void> call = service.createTransaction(bookId, sellerId, buyerId);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(null);
+                } else {
+                    callback.onFailure("거래 생성 실패: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onFailure("네트워크 오류: " + t.getMessage());
+            }
+        });
+    }
+
+    public static void getTransactionId(Context context, Long bookId, Long sellerId, Long buyerId, ApiCallback<Long> callback) {
+        RetrofitService service = getClient().create(RetrofitService.class);
+        Call<Long> call = service.getTransactionId(bookId, sellerId, buyerId);
+
+        call.enqueue(new Callback<Long>() {
+            @Override
+            public void onResponse(Call<Long> call, Response<Long> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure("거래 ID 조회 실패: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Long> call, Throwable t) {
+                callback.onFailure("네트워크 오류: " + t.getMessage());
+            }
+        });
+    }
+
 
 
 

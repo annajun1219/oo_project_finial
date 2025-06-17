@@ -70,12 +70,24 @@ public interface RetrofitService {
             @Query("status") String status // 필요 없으면 생략 가능
     );
 
-    // ✅ 마이페이지 -> 판매내역 -> 상태 변경 관련
-    @PATCH("/api/sales/{bookId}/status")
-    Call<Void> updateSaleStatus(
-            @Header("userId") Long userId,
-            @Path("bookId") Long bookId,
+    @PATCH("/api/sales/{transactionId}/status")
+    Call<Void> updateTransactionStatus(
+            @Path("transactionId") Long transactionId,
             @Query("status") String status
+    );
+
+    @POST("/api/sales/create-transaction")
+    Call<Void> createTransaction(
+            @Query("bookId") Long bookId,
+            @Query("sellerId") Long sellerId,
+            @Query("buyerId") Long buyerId
+    );
+
+    @GET("/api/sales/transaction-id")
+    Call<Long> getTransactionId(
+            @Query("bookId") Long bookId,
+            @Query("sellerId") Long sellerId,
+            @Query("buyerId") Long buyerId
     );
 
 
