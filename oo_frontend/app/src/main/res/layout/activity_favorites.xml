@@ -11,8 +11,9 @@
         android:text="찜목록"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/btn_back"
+        android:layout_marginTop="16dp" />
 
     <!-- 뒤로가기 아이콘 -->
     <ImageButton

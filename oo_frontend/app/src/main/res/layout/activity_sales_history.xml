@@ -1,147 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
+    android:fillViewport="true"
     android:padding="10dp"
     tools:context=".UI.mypage.sales.SalesHistoryActivity">
 
-    <!-- 상단 제목 -->
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="판매 내역"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true" />
-
-    <!-- 뒤로가기 아이콘 -->
-    <ImageButton
-        android:id="@+id/btn_back"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_back"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="5dp"
-        android:contentDescription="뒤로 가기"/>
-
-    <!-- 필터 버튼들 -->
-    <LinearLayout
-        android:id="@+id/filter_buttons"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/tv_title"
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_all"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/gray_button"
-            android:text="전체"
-            android:textStyle="bold"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_selling"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/login_button"
-            android:text="판매중"
-            android:textStyle="bold"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_reserved"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/green_button"
-            android:text="예약중"
-            android:textStyle="bold"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_sold"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/brown_button"
-            android:text="판매완료"
-            android:textStyle="bold"/>
-
-    </LinearLayout>
-
-    <!-- 판매 리스트 RecyclerView -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_sales"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/filter_buttons"
-        android:layout_marginTop="16dp"
-        android:padding="4dp"
-        android:contentDescription="판매내역 리스트"/>
-
-    <LinearLayout
-        android:id="@+id/layout_status_buttons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="15dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_set_selling"
+        <!-- 상단 제목 -->
+        <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="#e3ebb7"
-            android:textColor="#000000"
+            android:text="판매 내역"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:text="판매중" />
+            android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true" />
 
-        <Button
-            android:id="@+id/btn_set_reserved"
+        <!-- 뒤로가기 아이콘 -->
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_back"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="뒤로 가기"/>
+
+        <!-- 필터 버튼들 -->
+        <LinearLayout
+            android:id="@+id/filter_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/tv_title"
+            android:layout_marginTop="20dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_all"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/gray_button"
+                android:text="전체"
+                android:textStyle="bold"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_selling"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/login_button"
+                android:text="판매중"
+                android:textStyle="bold"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_reserved"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/green_button"
+                android:text="예약중"
+                android:textStyle="bold"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_sold"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/brown_button"
+                android:text="판매완료"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <!-- 판매 리스트 RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_sales"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/filter_buttons"
+            android:layout_marginTop="16dp"
+            android:padding="4dp"
+            android:contentDescription="판매내역 리스트"/>
+
+        <!-- 상태 변경 버튼들 -->
+        <LinearLayout
+            android:id="@+id/layout_status_buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="#ced986"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:text="예약중" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/recycler_sales"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/btn_set_selling"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="#e3ebb7"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:text="판매중" />
+
+            <Button
+                android:id="@+id/btn_set_reserved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="#ced986"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:text="예약중" />
+
+            <Button
+                android:id="@+id/btn_set_sold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="#d0c7be"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:text="판매완료" />
+        </LinearLayout>
+
+        <!-- 상태 변경 완료 버튼 -->
         <Button
-            android:id="@+id/btn_set_sold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="#d0c7be"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:text="판매완료" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_change_status"
-        android:layout_width="60dp"
-        android:layout_height="55dp"
-        android:layout_below="@id/filter_buttons"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="547dp"
-        android:layout_marginEnd="12dp"
-        android:backgroundTint="#000000"
-        android:text="✔"
-        android:textStyle="bold" />
-
-</RelativeLayout>
+            android:id="@+id/btn_change_status"
+            android:layout_width="60dp"
+            android:layout_height="55dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/recycler_sales"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="#000000"
+            android:text="✔"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</ScrollView>

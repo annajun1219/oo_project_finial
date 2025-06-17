@@ -1,10 +1,10 @@
 package com.example.oo_frontend.UI.mypage;
 
-import android.graphics.Color;
-import android.view.Gravity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,11 +19,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.gridlayout.widget.GridLayout;
 
-import com.example.oo_frontend.Model.User;
 import com.bumptech.glide.Glide;
-import com.example.oo_frontend.Model.ScheduleDto;
 import com.example.oo_frontend.Model.MyPage;
-import com.example.oo_frontend.Model.ScheduleItem;
+import com.example.oo_frontend.Model.ScheduleDto;
+import com.example.oo_frontend.Model.ScheduleItem; // ✅ 서버에서 온 scheduleInfo 배열의 각 항목
+import com.example.oo_frontend.Model.User;
+import com.example.oo_frontend.Network.ApiCallback;
+import com.example.oo_frontend.Network.RetrofitClient;
 import com.example.oo_frontend.Network.RetrofitService;
 import com.example.oo_frontend.R;
 import com.example.oo_frontend.Network.RetrofitHelper;
@@ -33,7 +35,6 @@ import com.example.oo_frontend.UI.mypage.review.ReviewActivity;
 import com.example.oo_frontend.UI.mypage.sales.SalesHistoryActivity;
 import com.example.oo_frontend.UI.main.MainActivity;
 import com.example.oo_frontend.UI.chat.list.ChatListActivity;
-import com.example.oo_frontend.Network.ApiCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,17 +52,17 @@ public class MyPageActivity extends AppCompatActivity {
     private ImageView btnHeart, btnReport;
     private LinearLayout btnSell, btnBuy, btnAddTimetable;
     private GridLayout timetableGrid;
+    private List<ScheduleItem> scheduleItems = new ArrayList<>();
 
     private String reportReason = "";
     private String reportMessage = "";
-
-    private final List<ScheduleItem> scheduleItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
 
+        // ✅ 뷰 초기화
         imageProfile = findViewById(R.id.imageProfile);
         tvUserName = findViewById(R.id.tvUserName);
         tvScore = findViewById(R.id.tvScore);
@@ -76,10 +77,8 @@ public class MyPageActivity extends AppCompatActivity {
         btnAddTimetable = findViewById(R.id.btnAddTimetable);
         timetableGrid = findViewById(R.id.timetableGrid);
 
-        timetableGrid.setVisibility(View.GONE); // 기본 감춤
-
-        loadMyPageData();
-        setClickEvents();
+        loadMyPageData();   // ✅ 서버에서 유저 정보 로딩
+        setClickEvents();   // ✅ 클릭 이벤트 설정
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.nav_profile);
@@ -99,6 +98,67 @@ public class MyPageActivity extends AppCompatActivity {
                 return true;
             }
             return false;
+        });
+
+    }
+
+    private void loadMyPageData() {
+        // ✅ 저장된 userId 불러오기
+        SharedPreferences prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("userId", -1);
+
+        // ✅ userId가 없으면 에러 처리
+        if (userId == -1) {
+            Toast.makeText(this, "userId가 없습니다. 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // ✅ API 요청
+        RetrofitService api = RetrofitHelper.getApiService();
+        Call<MyPage> call = api.getMyPage(userId); // ✅ userId 넘기기
+
+        call.enqueue(new Callback<MyPage>() {
+            @Override
+            public void onResponse(Call<MyPage> call, Response<MyPage> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    MyPage data = response.body();
+
+                    // 프로필 이미지
+                    Glide.with(MyPageActivity.this)
+                            .load(data.getProfileImage())
+                            .into(imageProfile);
+
+                    tvUserName.setText(data.getName());
+                    tvScore.setText(String.valueOf(data.getRating()));
+                    tvSellCount.setText(String.valueOf(data.getSaleCount()));
+                    tvBuyCount.setText(String.valueOf(data.getPurchaseCount()));
+                    tvReportCount.setText(String.valueOf(data.getWarningCount()));
+
+                    reportReason = data.getReportReason();
+                    reportMessage = data.getMessage();
+
+                    // ✅ 시간표 표시
+                    showScheduleGrid(data.getScheduleInfo());
+
+                    SharedPreferences prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+                    boolean alreadyShown = prefs.getBoolean("report_shown", false);
+
+                    // 신고 메시지 첫 로드 시 알림 표시
+                    if (!alreadyShown && reportMessage != null && !reportMessage.isEmpty()) {
+                        new AlertDialog.Builder(MyPageActivity.this)
+                                .setTitle("신고 알림")
+                                .setMessage(reportMessage)
+                                .setPositiveButton("확인", null)
+                                .show();
+                        prefs.edit().putBoolean("report_shown", true).apply();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyPage> call, Throwable t) {
+                Toast.makeText(MyPageActivity.this, "서버 통신 실패", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -202,52 +262,38 @@ public class MyPageActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void loadMyPageData() {
+
+    // ✅ 서버에 시간표 업로드: userId + List<String> scheduleSummary
+    private void uploadSchedule(List<String> scheduleSummary) {
         SharedPreferences prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        int userId = prefs.getInt("userId", -1);  // int로 받아야 함
+        long userId = prefs.getLong("userId", -1); // long 타입으로 가져오기
 
         if (userId == -1) {
-            Toast.makeText(this, "userId가 없습니다. 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "userId 없음", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        RetrofitHelper.getMyPage(this, (long) userId, new ApiCallback<MyPage>() {
+        RetrofitService api = RetrofitClient.getClient().create(RetrofitService.class);
+        Call<Void> call = api.uploadSchedule(userId, scheduleSummary);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onSuccess(MyPage data) {
-                Glide.with(MyPageActivity.this)
-                        .load(data.getProfileImage())
-                        .into(imageProfile);
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MyPageActivity.this, "등록 완료", Toast.LENGTH_SHORT).show();
 
-                tvUserName.setText(data.getName());
-                tvScore.setText(String.valueOf(data.getRating()));
-                tvSellCount.setText(String.valueOf(data.getSaleCount()));
-                tvBuyCount.setText(String.valueOf(data.getPurchaseCount()));
-                tvReportCount.setText(String.valueOf(data.getWarningCount()));
-
-                reportReason = data.getReportReason();
-                reportMessage = data.getMessage();
-
-                scheduleItems.clear();
-                scheduleItems.addAll(data.getScheduleInfo());
-                showScheduleGrid(scheduleItems);
-
-                boolean alreadyShown = prefs.getBoolean("report_shown", false);
-                if (!alreadyShown && reportMessage != null && !reportMessage.isEmpty()) {
-                    new AlertDialog.Builder(MyPageActivity.this)
-                            .setTitle("신고 알림")
-                            .setMessage(reportMessage)
-                            .setPositiveButton("확인", null)
-                            .show();
-                    prefs.edit().putBoolean("report_shown", true).apply();
+                    loadMyPageData();
+                } else {
+                    Toast.makeText(MyPageActivity.this, "등록 실패: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(String errorMessage) {
-                Toast.makeText(MyPageActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(MyPageActivity.this, "서버 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     private void showScheduleGrid(List<ScheduleItem> scheduleList) {
         timetableGrid.setVisibility(View.VISIBLE);
@@ -365,4 +411,3 @@ public class MyPageActivity extends AppCompatActivity {
         }
     }
 }
-

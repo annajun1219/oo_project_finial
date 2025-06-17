@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.*;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.oo_frontend.Model.Book;
+import com.example.oo_frontend.Model.BookRegisterResponse;
 import com.example.oo_frontend.Network.RetrofitHelper;
 import com.example.oo_frontend.Network.ApiCallback;
 import com.example.oo_frontend.R;
@@ -84,19 +86,30 @@ public class BookRegisterActivity extends AppCompatActivity {
                 return;
             }
 
+            // ✅ 서버에 저장된 이미지 이름과 동일한 URL 생성
+            String imageUrl = "http://10.0.2.2:8080/public/" + imageFile.getName();
+
             long sellerId = getSharedPreferences("loginPrefs", MODE_PRIVATE).getInt("userId", -1);
             if (sellerId == -1) {
                 Toast.makeText(this, "로그인 정보가 없습니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // ✅ Retrofit으로 교재 등록 요청
-            RetrofitHelper.registerBook(this, imageFile, title, professor, officialPrice, price,
-                    description, category, sellerId, new ApiCallback<Book>() {
+            RetrofitHelper.registerBook(
+                    this,
+                    title,
+                    professor,
+                    officialPrice,
+                    price,
+                    description,
+                    category,
+                    sellerId,
+                    imageUrl,
+                    new ApiCallback<BookRegisterResponse>() {
                         @Override
-                        public void onSuccess(Book registeredBook) {
-                            Long productId = registeredBook.getProductId();
-                            Intent intent = new Intent(BookRegisterActivity.this, com.example.oo_frontend.UI.main.book.BookDetailActivity.class);
+                        public void onSuccess(BookRegisterResponse response) {
+                            Long productId = response.getBookId();
+                            Intent intent = new Intent(BookRegisterActivity.this, BookDetailActivity.class);
                             intent.putExtra("productId", productId);
                             startActivity(intent);
                             finish();
@@ -106,7 +119,8 @@ public class BookRegisterActivity extends AppCompatActivity {
                         public void onFailure(String errorMessage) {
                             Toast.makeText(BookRegisterActivity.this, "등록 실패: " + errorMessage, Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    }
+            );
         });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);

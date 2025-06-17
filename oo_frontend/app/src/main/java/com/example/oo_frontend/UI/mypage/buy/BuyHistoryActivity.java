@@ -48,7 +48,7 @@ public class BuyHistoryActivity extends AppCompatActivity {
     }
 
     private void loadBuyHistory() {
-        SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("userId", -1);
 
         if (userId == -1) {

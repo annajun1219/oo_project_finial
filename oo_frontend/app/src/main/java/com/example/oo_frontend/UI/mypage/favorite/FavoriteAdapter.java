@@ -41,13 +41,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FavoriteItem item = list.get(position);
 
-        // 이미지 로딩
         Glide.with(holder.itemView.getContext())
                 .load(item.imageUrl)
                 .placeholder(R.drawable.sample_book)
                 .into(holder.imageBook);
 
-        // 예약중일 경우 흐리게 표시
+        holder.tvTitle.setText(item.title);  // 책 제목
+        holder.tvPrice.setText(String.valueOf(item.price));  // 책 가격
+
         if ("예약중".equals(item.status)) {
             holder.tvStatus.setVisibility(View.VISIBLE);
             holder.viewDim.setVisibility(View.VISIBLE);
@@ -63,15 +64,16 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
             FavoriteItem selectedItem = list.get(pos);
             SharedPreferences prefs = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
-            int userId = prefs.getInt("userId", -1);
-            if (userId == -1) return;
+            long userId = prefs.getLong("userId", -1);  // ✅ long 으로 가져와야 함
+            long bookId = selectedItem.bookId;
 
-            RetrofitHelper.deleteFavorite(context, (long) userId, (long) selectedItem.bookId, new ApiCallback<Void>() {
+            RetrofitHelper.deleteFavorite(context, userId, bookId, new ApiCallback<String>() {
                 @Override
-                public void onSuccess(Void data) {
+                public void onSuccess(String msg) {
                     list.remove(pos);
                     notifyItemRemoved(pos);
                     notifyItemRangeChanged(pos, list.size());
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -90,6 +92,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageBook, imageHeart;
         TextView tvStatus;
+        TextView tvTitle, tvPrice;
+
         View viewDim;
 
         public ViewHolder(@NonNull View itemView) {
@@ -98,6 +102,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             imageHeart = itemView.findViewById(R.id.image_heart);
             tvStatus = itemView.findViewById(R.id.tv_status);
             viewDim = itemView.findViewById(R.id.view_dim);
+
+            // ✨ 새로 추가
+            tvTitle = itemView.findViewById(R.id.tv_title);
+            tvPrice = itemView.findViewById(R.id.tv_price);
         }
+
     }
 }

@@ -2,20 +2,19 @@ package com.example.oo_frontend.Model;
 
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
+import java.util.List;
 
 public class Book implements Serializable {
 
     // 응답 전용 필드
-    @SerializedName("productId")
+    @SerializedName("id")
     private Long productId;
-
 
     @SerializedName("status")
     private String status;
 
     @SerializedName("imageUrl")
     private String imageUrl;
-
     @SerializedName("createdAt")
     private String createdAt;
 
@@ -28,13 +27,14 @@ public class Book implements Serializable {
     @SerializedName("isMyPost")
     private boolean isMyPost;
 
-    @SerializedName("id")
-    private Long id;
-
 
     // 요청/응답 공통 필드
     @SerializedName("sellerId")
     private Long sellerId;
+
+
+    @SerializedName("seller")
+    private SellerInfo seller;
 
     @SerializedName("title")
     private String title;
@@ -63,6 +63,8 @@ public class Book implements Serializable {
     public Long getSellerId() { return sellerId; }
     public void setSellerId(Long sellerId) { this.sellerId = sellerId; }
 
+
+
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
@@ -84,9 +86,13 @@ public class Book implements Serializable {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
     public String getCreatedAt() { return createdAt; }
     public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
@@ -99,7 +105,37 @@ public class Book implements Serializable {
     public boolean isMyPost() { return isMyPost; }
     public void setMyPost(boolean myPost) { isMyPost = myPost; }
 
-    public Long getId() { return id; }
+    public SellerInfo getSeller() {
+        return seller;
+    }
 
-    public void setId(Long id) { this.id = id; }
+    public void setSeller(SellerInfo seller) {
+        this.seller = seller;
+    }
+
+    public static class SellerInfo {
+        @SerializedName("sellerId")
+        private Long sellerId;
+
+        @SerializedName("name")
+        private String name;
+
+        @SerializedName("phone")
+        private String phone;
+
+        @SerializedName("profileImage")
+        private String profileImage;
+
+        public Long getSellerId() { return sellerId; }
+        public void setSellerId(Long sellerId) { this.sellerId = sellerId; }
+
+        public String getName() { return name; }
+        public void setName(String name) { this.name = name; }
+
+        public String getPhone() { return phone; }
+        public void setPhone(String phone) { this.phone = phone; }
+
+        public String getProfileImage() { return profileImage; }
+        public void setProfileImage(String profileImage) { this.profileImage = profileImage; }
+    }
 }

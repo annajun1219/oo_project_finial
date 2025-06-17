@@ -1,5 +1,7 @@
 package com.example.oo_frontend.UI.main.book;
 
+import static com.example.oo_frontend.Network.RetrofitHelper.fetchBooksByDepartment;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -59,9 +61,20 @@ public class BookListByCategoryActivity extends AppCompatActivity {
         searchByTitleButton = findViewById(R.id.searchByTitleButton);
         searchByProfessorButton = findViewById(R.id.searchByProfessorButton);
 
-        // ✅ 서버에서 데이터 받아오기
-        fetchBooksByCategory(categoryName);
+        fetchBooksByDepartment(this, categoryName, new ApiCallback<List<Book>>() {
+            @Override
+            public void onSuccess(List<Book> response) {
+                bookList.clear();
+                bookList.addAll(response);
+                bookAdapter = new BookAdapter(bookList, BookListByCategoryActivity.this);
+                bookRecyclerView.setAdapter(bookAdapter);
+            }
 
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(BookListByCategoryActivity.this, "서버 오류: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
         // 버튼 클릭 → 검색 기준 설정
         searchByTitleButton.setOnClickListener(v -> {
             selectedType = SearchType.TITLE;
@@ -117,27 +130,7 @@ public class BookListByCategoryActivity extends AppCompatActivity {
         });
     }
 
-    // ✅ 서버에서 전체 리스트 받아서 카테고리만 필터링
-    private void fetchBooksByCategory(String categoryName) {
-        RetrofitHelper.fetchAllBooks(this, new ApiCallback<List<Book>>() {
-            @Override
-            public void onSuccess(List<Book> response) {
-                bookList.clear();
-                for (Book book : response) {
-                    if (book.getCategory().equals(categoryName)) {
-                        bookList.add(book);
-                    }
-                }
-                bookAdapter = new com.example.oo_frontend.UI.main.book.BookAdapter(bookList, BookListByCategoryActivity.this);
-                bookRecyclerView.setAdapter(bookAdapter);
-            }
 
-            @Override
-            public void onFailure(String errorMessage) {
-                Toast.makeText(BookListByCategoryActivity.this, "서버 오류: " + errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void highlightSelectedTab(Button selected) {
         Button[] allTabs = {searchByTitleButton, searchByProfessorButton};

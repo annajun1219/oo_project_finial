@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -77,11 +78,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.title.setText(book.getTitle());
         holder.salePrice.setText(book.getPrice() + "원");
         holder.originalPrice.setText("정가 " + book.getOfficialPrice() + "원");
+        String meta = "시세 " + book.getAverageUsedPrice() + "원 · " + book.getProfessorName() + " · " + book.getCategory();
         String professor = book.getProfessorName() != null ? book.getProfessorName() : "교수명 없음";
         String category = book.getCategory() != null ? book.getCategory() : "카테고리 없음";
-        String meta = "교수: " + professor + " · " + category;
+        String meta_search = "교수: " + professor + " · " + category;
 
-        holder.metaInfo.setText(meta);
+        holder.metaInfo.setText(meta_search);
+
+        String imageUrl = book.getImageUrl();
 
         // 이미지 로딩
         Glide.with(context)
@@ -92,9 +96,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
         // 🔁 클릭 시 상세페이지로 이동
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, BookDetailActivity.class);
-            intent.putExtra("productId", book.getId());  // ✅ 핵심 변경
-            context.startActivity(intent);
+            Long productId = book.getProductId();
+            if (productId != null) {
+                Intent intent = new Intent(context, BookDetailActivity.class);
+                intent.putExtra("productId", productId);
+                context.startActivity(intent);
+            } else {
+                Toast.makeText(context, "교재 ID가 없습니다.", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

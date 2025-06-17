@@ -77,6 +77,9 @@ public class ChatListAdapter extends BaseAdapter {
 
     // 날짜 포맷 변환: "2025-04-08T10:30:00" → "4월 8일 10:30"
     private String formatDate(String isoDate) {
+        if (isoDate == null || isoDate.trim().isEmpty()) {  // ✅ 변수명 일치시킴
+            return "";
+        }
         try {
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.KOREA);
             Date date = inputFormat.parse(isoDate);

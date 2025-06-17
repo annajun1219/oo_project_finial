@@ -31,6 +31,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     private TextView confirmTransactionButton;
     private Long roomId; // ✅ String → Long
     private Long userId; // ✅ int → Long
+    private Long bookId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,20 +39,15 @@ public class ChatRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat_room);
 
         // ✅ 채팅방 이름 및 사용자 정보
-        String roomIdStr = getIntent().getStringExtra("roomId");
+        roomId = getIntent().getLongExtra("roomId", -1L);
+        bookId = getIntent().getLongExtra("bookId", -1L);
+
+
         String userName = getIntent().getStringExtra("userName");
         userId = getIntent().getLongExtra("userId", -1L);
 
-        if (roomIdStr == null || userId == -1) {
+        if (roomId == -1L || userId == -1L || bookId == -1L) {
             Toast.makeText(this, "잘못된 접근입니다", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-
-        try {
-            roomId = Long.parseLong(roomIdStr); // ✅ 문자열 roomId를 Long으로 변환
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "방 ID 변환 오류", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -123,4 +119,3 @@ public class ChatRoomActivity extends AppCompatActivity {
         });
     }
 }
-
