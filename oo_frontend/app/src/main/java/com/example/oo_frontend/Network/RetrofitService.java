@@ -60,28 +60,31 @@ public interface RetrofitService {
     // ✅ 마이페이지 -> 시간표 업로드
     @POST("/api/schedule")
     Call<Void> createSchedule(@Body ScheduleDto schedule);
+
+    @POST("/api/schedule/upload")
+    Call<Void> uploadSchedule(@Header("userId") long userId, @Body List<String> scheduleSummary);
     // ✅ 마이페이지 -> 판매내역
     @GET("/api/sales")
     Call<List<SaleItem>> getSaleHistory(
-            @Header("userId") int userId,
+            @Header("userId") Long userId,
             @Query("status") String status // 필요 없으면 생략 가능
     );
 
     // ✅ 마이페이지 -> 판매내역 -> 상태 변경 관련
     @PATCH("/api/sales/{bookId}/status")
     Call<Void> updateSaleStatus(
-            @Header("userId") int userId,
-            @Path("bookId") int bookId,
+            @Header("userId") Long userId,
+            @Path("bookId") Long bookId,
             @Query("status") String status
     );
 
     // ✅ 마이페이지 -> 구매내역 조회
     @GET("/api/purchases")
-    Call<List<PurchaseItem>> getPurchaseHistory(@Header("userId") int userId);
+    Call<List<PurchaseItem>> getPurchaseHistory(@Header("userId") Long userId);
 
     // ✅ 마이페이지 -> 찜목록
     @GET("/api/favorites")
-    Call<List<FavoriteItem>> getFavoriteList(@Header("userId") int userId);
+    Call<List<FavoriteItem>> getFavoriteList(@Header("userId") Long userId);
     // 찜 추가
     @POST("/api/favorites/{bookId}")
     Call<String> addFavorite(@Path("bookId") long bookId, @Header("userId") long userId);

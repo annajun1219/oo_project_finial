@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.oo_frontend.Model.SearchResultDto;
 import com.example.oo_frontend.UI.mypage.MyPageActivity;
 import com.example.oo_frontend.Model.Book;
 import com.example.oo_frontend.Network.*;

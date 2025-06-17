@@ -180,7 +180,7 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 판매 내역 조회
-    public static void getSales(Context context, int userId, final ApiCallback<List<SaleItem>> callback) {
+    public static void getSales(Context context, Long userId, final ApiCallback<List<SaleItem>> callback) {
         RetrofitService api = getApiService();
 
         Log.d("판매내역 요청", "요청 보냄 - userId: " + userId);
@@ -215,7 +215,7 @@ public class RetrofitHelper {
 
 
     // ✅ 마이페이지 -> 판매 내역 -> 상태 변경
-    public static void updateSaleStatus(Context context, int userId, int bookId, String status, final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
+    public static void updateSaleStatus(Context context, Long userId, Long bookId, String status, final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
         RetrofitService api = getApiService();
         api.updateSaleStatus(userId, bookId, status).enqueue(new Callback<Void>() {
             @Override
@@ -236,7 +236,7 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 구매 내역 조회
-    public static void getPurchaseHistory(Context context, int userId, final com.example.oo_frontend.Network.ApiCallback<List<PurchaseItem>> callback) {
+    public static void getPurchaseHistory(Context context, Long userId, final com.example.oo_frontend.Network.ApiCallback<List<PurchaseItem>> callback) {
         RetrofitService api = getApiService();
 
         api.getPurchaseHistory(userId).enqueue(new Callback<List<PurchaseItem>>() {
@@ -257,7 +257,7 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 찜목록 조회
-    public static void getFavorites(Context context, int userId, final com.example.oo_frontend.Network.ApiCallback<List<FavoriteItem>> callback) {
+    public static void getFavorites(Context context, long userId, final com.example.oo_frontend.Network.ApiCallback<List<FavoriteItem>> callback) {
         RetrofitService api = getApiService();
         api.getFavoriteList(userId).enqueue(new Callback<List<FavoriteItem>>() {
             @Override

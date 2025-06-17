@@ -9,8 +9,7 @@ public class User {
     private float rating;
 
     // 기본 생성자 (Gson이나 Firebase 등에서 필요)
-    public User() {
-    }
+
 
     // 전체 필드를 초기화하는 생성자
     public User(int userId, String email, String name, String password, String profileImageUrl, float rating) {

@@ -145,4 +145,3 @@ public class BookRegisterActivity extends AppCompatActivity {
         }
     }
 }
-

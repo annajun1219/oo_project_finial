@@ -57,7 +57,7 @@ public class BuyHistoryActivity extends AppCompatActivity {
         }
 
         // ✅ 헬퍼에서 바로 List<PurchaseItem> 받아오기
-        RetrofitHelper.getPurchaseHistory(this, userId, new ApiCallback<List<PurchaseItem>>() {
+        RetrofitHelper.getPurchaseHistory(this, (long) userId, new ApiCallback<List<PurchaseItem>>() {
             @Override
             public void onSuccess(List<PurchaseItem> purchases) {
                 allItems = purchases;

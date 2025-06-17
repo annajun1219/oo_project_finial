@@ -263,6 +263,38 @@ public class MyPageActivity extends AppCompatActivity {
     }
 
 
+    // ✅ 서버에 시간표 업로드: userId + List<String> scheduleSummary
+    private void uploadSchedule(List<String> scheduleSummary) {
+        SharedPreferences prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        long userId = prefs.getLong("userId", -1); // long 타입으로 가져오기
+
+        if (userId == -1) {
+            Toast.makeText(this, "userId 없음", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        RetrofitService api = RetrofitClient.getClient().create(RetrofitService.class);
+        Call<Void> call = api.uploadSchedule(userId, scheduleSummary);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MyPageActivity.this, "등록 완료", Toast.LENGTH_SHORT).show();
+
+                    loadMyPageData();
+                } else {
+                    Toast.makeText(MyPageActivity.this, "등록 실패: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(MyPageActivity.this, "서버 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     private void showScheduleGrid(List<ScheduleItem> scheduleList) {
         timetableGrid.setVisibility(View.VISIBLE);
         timetableGrid.removeAllViews();
@@ -379,5 +411,4 @@ public class MyPageActivity extends AppCompatActivity {
         }
     }
 }
-
 
