@@ -51,7 +51,7 @@ public class ChatListActivity extends AppCompatActivity {
         // ✅ 채팅방 클릭 시 이동
         chatListView.setOnItemClickListener((AdapterView<?> parent, android.view.View view, int position, long id) -> {
             ChatRoom selectedChat = chatRooms.get(position);
-            Intent intent = new Intent(ChatListActivity.this, ChatActivity.class); // ✅ 수정!
+            Intent intent = new Intent(ChatListActivity.this, ChatRoomActivity.class); // ✅ 수정!
             intent.putExtra("userName", selectedChat.getOtherUserName());
             intent.putExtra("roomId", selectedChat.getRoomId());
             intent.putExtra("userId", userId);

@@ -3,6 +3,7 @@ package com.example.oo_frontend.UI.chat.room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.example.oo_frontend.Model.Book;
 import com.example.oo_frontend.Model.ChatMessage;
 import com.example.oo_frontend.Network.ApiCallback;
 import com.example.oo_frontend.Network.RetrofitHelper;
@@ -52,6 +55,30 @@ public class ChatRoomActivity extends AppCompatActivity {
             return;
         }
 
+        RetrofitHelper.fetchBookDetail(this, bookId, userId, new ApiCallback<Book>() {
+            @Override
+            public void onSuccess(Book book) {
+                TextView bookTitle = findViewById(R.id.bookTitle);
+                TextView bookPrice = findViewById(R.id.bookPrice);
+                ImageView bookImage = findViewById(R.id.bookImage);
+
+                bookTitle.setText(book.getTitle());
+                bookPrice.setText(book.getPrice() + "원");
+
+                Glide.with(ChatRoomActivity.this)
+                        .load(book.getImageUrl())
+                        .placeholder(R.drawable.ic_book_placeholder)
+                        .error(R.drawable.ic_book_placeholder)
+                        .into(bookImage);
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(ChatRoomActivity.this, "책 정보 불러오기 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         TextView titleView = findViewById(R.id.chatRoomTitle);
         titleView.setText(userName);
 
@@ -80,6 +107,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         // ✅ 거래확정 버튼
         confirmTransactionButton = findViewById(R.id.confirmTransactionButton);
+        confirmTransactionButton.setVisibility(View.VISIBLE);
         confirmTransactionButton.setOnClickListener(v -> {
             Toast.makeText(this, "거래가 확정되었습니다.", Toast.LENGTH_SHORT).show();
         });

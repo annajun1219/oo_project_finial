@@ -3,6 +3,7 @@ package com.example.oo_frontend.Network;
 import static com.example.oo_frontend.Network.RetrofitClient.getClient;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.example.oo_frontend.Model.BookRegisterRequest;
@@ -215,9 +216,9 @@ public class RetrofitHelper {
 
 
     // ✅ 마이페이지 -> 판매 내역 -> 상태 변경
-    public static void updateSaleStatus(Context context, Long userId, Long bookId, String status, final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
+    public static void updateSaleStatus(Context context, Long userId, Long transactionId, String status, ApiCallback<Void> callback) {
         RetrofitService api = getApiService();
-        api.updateSaleStatus(userId, bookId, status).enqueue(new Callback<Void>() {
+        api.updateSaleStatus(userId, transactionId, status).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -234,6 +235,8 @@ public class RetrofitHelper {
             }
         });
     }
+
+
 
     // ✅ 마이페이지 -> 구매 내역 조회
     public static void getPurchaseHistory(Context context, Long userId, final com.example.oo_frontend.Network.ApiCallback<List<PurchaseItem>> callback) {

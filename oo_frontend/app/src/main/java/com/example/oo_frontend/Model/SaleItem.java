@@ -1,6 +1,7 @@
 package com.example.oo_frontend.Model;
 
 public class SaleItem {
+    public long transactionId;
     public int bookId;
     public String title;
     public int price;
@@ -9,7 +10,8 @@ public class SaleItem {
     public String createdAt;
     public boolean isSelected = false;
 
-    public SaleItem(int bookId, String title, int price, String imageUrl, String status, String createdAt) {
+    public SaleItem(long transactionId, int bookId, String title, int price, String imageUrl, String status, String createdAt) {
+        this.transactionId = transactionId;
         this.bookId = bookId;
         this.title = title;
         this.price = price;

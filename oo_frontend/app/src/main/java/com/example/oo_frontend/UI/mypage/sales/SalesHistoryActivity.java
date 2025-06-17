@@ -83,20 +83,30 @@ public class SalesHistoryActivity extends AppCompatActivity {
     private void updateSelectedItemsStatus(String newStatus) {
         for (SaleItem item : salesList) {
             if (item.isSelected) {
-                RetrofitHelper.updateSaleStatus(this, (long) userId, (long) item.bookId, newStatus, new ApiCallback<Void>() {
-                    @Override
-                    public void onSuccess(Void data) {
-                        item.status = newStatus;
-                        item.isSelected = false;
-                        salesAdapter.notifyDataSetChanged();
-                    }
+                RetrofitHelper.updateSaleStatus(
+                        SalesHistoryActivity.this,
+                        (long) userId,                     // userId 전달
+                        Long.valueOf(item.bookId),         // bookId 전달
+                        newStatus,
+                        new ApiCallback<Void>() {
+                            @Override
+                            public void onSuccess(Void data) {
+                                // 상태 업데이트 성공 시 처리
+                                item.status = newStatus;
+                                item.isSelected = false;
+                                // UI 업데이트는 메인 스레드에서 실행해야 함
+                                runOnUiThread(() -> salesAdapter.notifyDataSetChanged());
+                            }
 
-                    @Override
-                    public void onFailure(String msg) {
-                        Toast.makeText(SalesHistoryActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                            @Override
+                            public void onFailure(String msg) {
+                                Toast.makeText(SalesHistoryActivity.this, msg, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                );
             }
         }
     }
+
+
 }

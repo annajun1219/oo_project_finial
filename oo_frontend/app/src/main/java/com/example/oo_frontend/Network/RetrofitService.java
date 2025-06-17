@@ -78,6 +78,8 @@ public interface RetrofitService {
             @Query("status") String status
     );
 
+
+
     // ✅ 마이페이지 -> 구매내역 조회
     @GET("/api/purchases")
     Call<List<PurchaseItem>> getPurchaseHistory(@Header("userId") Long userId);
