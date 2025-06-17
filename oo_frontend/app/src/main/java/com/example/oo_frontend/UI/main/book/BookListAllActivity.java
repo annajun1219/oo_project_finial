@@ -59,14 +59,19 @@ public class BookListAllActivity extends AppCompatActivity {
 
     private void handleSearchResponse(Response<List<SearchResultDto>> response, String keyword) {
         if (response.isSuccessful() && response.body() != null) {
-            bookList.clear();
-            for (SearchResultDto dto : response.body()) {
-                bookList.add(dto.toBook());
+            List<SearchResultDto> results = response.body();
+            if (results.isEmpty()) {
+                Toast.makeText(this, "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show();
+            } else {
+                bookList.clear();
+                for (SearchResultDto dto : results) {
+                    bookList.add(dto.toBook());
+                }
+                bookAdapter.notifyDataSetChanged();
+                saveRecentKeyword(keyword);
             }
-            bookAdapter.notifyDataSetChanged();
-            saveRecentKeyword(keyword);
         } else {
-            Toast.makeText(BookListAllActivity.this, "검색 실패: " + response.code(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "서버 오류: " + response.code(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -78,8 +83,8 @@ public class BookListAllActivity extends AppCompatActivity {
         // SharedPreferences에서 userId 가져오기
         SharedPreferences prefs = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
         userId = (long) prefs.getInt("userId", -1); // int로 저장했기 때문에 long으로 변환
-        if (userId == -1L) {
-            Toast.makeText(this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+        if (userId == null || userId == -1L) {
+            Toast.makeText(BookListAllActivity.this, "로그인 후 이용해주세요.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -120,36 +125,42 @@ public class BookListAllActivity extends AppCompatActivity {
                     return;
                 }
 
+                if (userId == null || userId == -1L) {
+                    Toast.makeText(BookListAllActivity.this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 String filter = selectedType == SearchType.TITLE ? "title" : "professor";
 
                 if ("title".equals(filter)) {
-                    retrofitService.searchByTitle(keyword, userId)
-                            .enqueue(new Callback<List<SearchResultDto>>() {
+                    retrofitService.searchByTitle(keyword)
+                            .enqueue(new Callback<List<Book>>() {
                                 @Override
-                                public void onResponse(Call<List<SearchResultDto>> call, Response<List<SearchResultDto>> response) {
-                                    handleSearchResponse(response, keyword);
+                                public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                                    bookAdapter.updateBooks(response.body());
                                 }
 
                                 @Override
-                                public void onFailure(Call<List<SearchResultDto>> call, Throwable t) {
+                                public void onFailure(Call<List<Book>> call, Throwable t) {
                                     Toast.makeText(BookListAllActivity.this, "네트워크 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                 } else {
-                    retrofitService.searchByProfessor(keyword, userId)
-                            .enqueue(new Callback<List<SearchResultDto>>() {
+                    retrofitService.searchByProfessor(keyword)
+                            .enqueue(new Callback<List<Book>>() {
                                 @Override
-                                public void onResponse(Call<List<SearchResultDto>> call, Response<List<SearchResultDto>> response) {
-                                    handleSearchResponse(response, keyword);
+                                public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                                    bookAdapter.updateBooks(response.body());
                                 }
 
                                 @Override
-                                public void onFailure(Call<List<SearchResultDto>> call, Throwable t) {
+                                public void onFailure(Call<List<Book>> call, Throwable t) {
                                     Toast.makeText(BookListAllActivity.this, "네트워크 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                 }
             }
+
 
             @Override
             public void afterTextChanged(Editable s) {}
@@ -196,9 +207,8 @@ public class BookListAllActivity extends AppCompatActivity {
         RetrofitHelper.fetchAllBooks(this, new ApiCallback<List<Book>>() {
             @Override
             public void onSuccess(List<Book> response) {
-                bookList.clear();
-                bookList.addAll(response);
-                bookAdapter.notifyDataSetChanged();
+                Log.d("BookList", "받은 교재 수: " + response.size());
+                bookAdapter.updateBooks(response);
             }
 
             @Override

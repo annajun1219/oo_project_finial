@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +29,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         this.originalList = new ArrayList<>(bookList);
         this.filteredList = new ArrayList<>(bookList);
         this.context = context;
+    }
+
+    public void updateBooks(List<Book> newList) {
+        originalList.clear();
+        originalList.addAll(newList);
+
+        filteredList.clear();
+        filteredList.addAll(newList);
+
+        notifyDataSetChanged();
     }
 
     // 필터 함수
@@ -58,13 +69,18 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
+
         Book book = filteredList.get(position);
+
+        Log.d("어댑터", "교재 제목: " + book.getTitle());
 
         holder.title.setText(book.getTitle());
         holder.salePrice.setText(book.getPrice() + "원");
         holder.originalPrice.setText("정가 " + book.getOfficialPrice() + "원");
+        String professor = book.getProfessorName() != null ? book.getProfessorName() : "교수명 없음";
+        String category = book.getCategory() != null ? book.getCategory() : "카테고리 없음";
+        String meta = "교수: " + professor + " · " + category;
 
-        String meta = "시세 " + book.getAverageUsedPrice() + "원 · " + book.getProfessorName() + " · " + book.getCategory();
         holder.metaInfo.setText(meta);
 
         // 이미지 로딩
@@ -77,7 +93,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         // 🔁 클릭 시 상세페이지로 이동
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, BookDetailActivity.class);
-            intent.putExtra("productId", book.getProductId());  // ✅ 핵심 변경
+            intent.putExtra("productId", book.getId());  // ✅ 핵심 변경
             context.startActivity(intent);
         });
     }

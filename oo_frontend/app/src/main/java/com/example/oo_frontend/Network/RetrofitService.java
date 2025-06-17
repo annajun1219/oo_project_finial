@@ -119,17 +119,11 @@ public interface RetrofitService {
     @GET("/api/books/{productId}")
     Call<Book> getBookDetail(@Path("productId") long productId);
 
-    @GET("/api/search/title")
-    Call<List<SearchResultDto>> searchByTitle(
-            @Query("keyword") String keyword,
-            @Query("userId") Long userId
-    );
+    @GET("/api/books/search/title")
+    Call<List<Book>> searchByTitle(@Query("keyword") String keyword);
 
-    @GET("/api/search/professor")
-    Call<List<SearchResultDto>> searchByProfessor(
-            @Query("keyword") String keyword,
-            @Query("userId") Long userId
-    );
+    @GET("/api/books/search/professor")
+    Call<List<Book>> searchByProfessor(@Query("keyword") String keyword);
 
     @GET("/api/books")
     Call<List<Book>> getAllBooks();

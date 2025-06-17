@@ -28,6 +28,10 @@ public class Book implements Serializable {
     @SerializedName("isMyPost")
     private boolean isMyPost;
 
+    @SerializedName("id")
+    private Long id;
+
+
     // 요청/응답 공통 필드
     @SerializedName("sellerId")
     private Long sellerId;
@@ -94,4 +98,8 @@ public class Book implements Serializable {
 
     public boolean isMyPost() { return isMyPost; }
     public void setMyPost(boolean myPost) { isMyPost = myPost; }
+
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
 }
