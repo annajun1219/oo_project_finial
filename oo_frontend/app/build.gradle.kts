@@ -48,6 +48,8 @@ dependencies {
     implementation(libs.glide)
     kapt(libs.glide.compiler)
 
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

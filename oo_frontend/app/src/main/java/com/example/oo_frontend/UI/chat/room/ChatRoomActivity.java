@@ -29,8 +29,9 @@ public class ChatRoomActivity extends AppCompatActivity {
     private EditText messageEditText;
     private ImageView sendButton;
     private TextView confirmTransactionButton;
-    private String roomId;
-    private int userId;
+    private Long roomId; // ✅ String → Long
+    private Long userId; // ✅ int → Long
+    private Long bookId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,14 @@ public class ChatRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat_room);
 
         // ✅ 채팅방 이름 및 사용자 정보
-        roomId = getIntent().getStringExtra("roomId");
-        String userName = getIntent().getStringExtra("userName");
-        userId = getSharedPreferences("loginPrefs", MODE_PRIVATE).getInt("uid", -1); // ❗userId는 헤더에 필요
+        roomId = getIntent().getLongExtra("roomId", -1L);
+        bookId = getIntent().getLongExtra("bookId", -1L);
 
-        if (roomId == null || userId == -1) {
+
+        String userName = getIntent().getStringExtra("userName");
+        userId = getIntent().getLongExtra("userId", -1L);
+
+        if (roomId == -1L || userId == -1L || bookId == -1L) {
             Toast.makeText(this, "잘못된 접근입니다", Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -60,7 +64,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         // ✅ 메시지 리스트 초기화
         messageListView = findViewById(R.id.messageListView);
         messageList = new ArrayList<>();
-        adapter = new ChatMessageAdapter(this, messageList, userId);
+        adapter = new ChatMessageAdapter(this, messageList, userId.intValue()); // 여긴 int로 유지
         messageListView.setAdapter(adapter);
 
         // ✅ 메시지 입력 및 전송
@@ -85,7 +89,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     }
 
     private void loadMessages() {
-        RetrofitHelper.fetchChatMessages(this, roomId, String.valueOf(userId), new ApiCallback<List<ChatMessage>>() {
+        RetrofitHelper.fetchChatMessages(this, roomId, userId, new ApiCallback<List<ChatMessage>>() {
             @Override
             public void onSuccess(List<ChatMessage> data) {
                 messageList.clear();
@@ -102,10 +106,10 @@ public class ChatRoomActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String messageText) {
-        RetrofitHelper.sendChatMessage(this, String.valueOf(userId), roomId, messageText, new ApiCallback<Void>() {
+        RetrofitHelper.sendChatMessage(this, userId, roomId, messageText, new ApiCallback<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                loadMessages(); // 전송 성공 후 메시지 새로고침
+                loadMessages(); // 전송 성공 후 새로고침
             }
 
             @Override

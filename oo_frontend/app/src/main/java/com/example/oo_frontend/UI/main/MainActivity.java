@@ -111,7 +111,9 @@ public class MainActivity extends AppCompatActivity {
         // 검색 아이콘
         ImageView searchIcon = findViewById(R.id.registerIcon);
         searchIcon.setOnClickListener(v -> {
-            startActivity(new Intent(this, BookListAllActivity.class));
+            Intent intent = new Intent(this, BookListAllActivity.class);
+            intent.putExtra("userId", userId); // 🔹 이미 위에서 선언된 userId 사용
+            startActivity(intent);
         });
 
         // 시스템바 패딩

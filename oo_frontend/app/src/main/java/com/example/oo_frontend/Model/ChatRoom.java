@@ -5,7 +5,11 @@ import com.google.gson.annotations.SerializedName;
 public class ChatRoom {
 
     @SerializedName("roomId")
-    private String roomId;
+    private Long roomId;
+
+    @SerializedName("bookId")
+    private Long bookId;
+
 
     @SerializedName("otherUserId")
     private String otherUserId;
@@ -23,9 +27,14 @@ public class ChatRoom {
     private String lastSentAt;
 
     // Getter
-    public String getRoomId() {
+    public Long getRoomId() {
         return roomId;
     }
+
+    public Long getBookId() {
+        return bookId;
+    }
+
 
     public String getOtherUserId() {
         return otherUserId;

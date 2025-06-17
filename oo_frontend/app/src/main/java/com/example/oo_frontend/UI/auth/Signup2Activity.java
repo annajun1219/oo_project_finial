@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.oo_frontend.Model.Signup;
 import com.example.oo_frontend.Model.Login;
 import com.example.oo_frontend.Network.RetrofitClient;
+import com.example.oo_frontend.Network.RetrofitHelper;
 import com.example.oo_frontend.Network.RetrofitService;
 import com.example.oo_frontend.R;
 import com.example.oo_frontend.UI.main.MainActivity;
@@ -139,11 +140,34 @@ public class Signup2Activity extends AppCompatActivity {
 
     // 닉네임 중복 확인 - 실제 서버 요청 필요
     private void checkNicknameDuplicate(String nickname) {
-        // 예시 로직: "taken123"은 이미 사용 중
-        if (nickname.equalsIgnoreCase("taken123")) {
-            Toast.makeText(this, "이미 사용 중인 닉네임입니다.", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "사용 가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
-        }
+        RetrofitService api = RetrofitHelper.getApiService();  // RetrofitClient 의 getApiService() 사용
+        api.checkName(nickname).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    boolean isTaken = response.body();
+                    if (!isTaken) {
+                        Toast.makeText(Signup2Activity.this,
+                                "사용 가능한 닉네임입니다.",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Signup2Activity.this,
+                                "이미 사용 중인 닉네임입니다.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(Signup2Activity.this,
+                            "닉네임 확인 실패: 코드 " + response.code(),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(Signup2Activity.this,
+                        "네트워크 오류: " + t.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

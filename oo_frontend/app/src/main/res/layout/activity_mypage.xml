@@ -20,7 +20,7 @@
         app:itemTextColor="@color/bottom_nav_color_selector" />
 
     <!-- 전체 콘텐츠 -->
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,7 +32,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
 
             <!-- 연두색 배경 -->
             <RelativeLayout
@@ -314,48 +315,46 @@
                 </FrameLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/btnAddTimetable"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="80dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/login_button"
-                android:elevation="6dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="➕  시간표 등록"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/timetableContainer"
+            <!-- 시간표 본문 -->
+            <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:layout_marginTop="20dp">
+                android:layout_height="wrap_content">
 
                 <androidx.gridlayout.widget.GridLayout
                     android:id="@+id/timetableGrid"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:columnCount="6"
                     android:rowCount="5"
-                    android:orientation="horizontal"/>
-            </LinearLayout>
+                    android:useDefaultMargins="true"
+                    android:alignmentMode="alignMargins"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp" />
+            </HorizontalScrollView>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
+    <!-- 오른쪽 아래 등록 버튼 (스크롤 밖에 둠) -->
+    <LinearLayout
+        android:id="@+id/btnAddTimetable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="90dp"
+        android:background="@drawable/login_button"
+        android:elevation="6dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="➕ 시간표 등록"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 </RelativeLayout>
-
-

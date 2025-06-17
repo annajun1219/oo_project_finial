@@ -12,6 +12,7 @@ import com.example.oo_frontend.Model.ChatRoom;
 import com.example.oo_frontend.Network.ApiCallback;
 import com.example.oo_frontend.Network.RetrofitHelper;
 import com.example.oo_frontend.R;
+import com.example.oo_frontend.UI.chat.room.ChatActivity;
 import com.example.oo_frontend.UI.chat.room.ChatRoomActivity;
 import com.example.oo_frontend.UI.main.MainActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -32,7 +33,8 @@ public class ChatListActivity extends AppCompatActivity {
         chatListView = findViewById(R.id.chatListView);
 
         // ✅ JWT 없이 채팅방 리스트 불러오기
-        RetrofitHelper.fetchChatRooms(this, new ApiCallback<List<ChatRoom>>() {
+        Long userId=2L;
+        RetrofitHelper.fetchChatRooms(this, userId, new ApiCallback<List<ChatRoom>>() {
             @Override
             public void onSuccess(List<ChatRoom> result) {
                 chatRooms = result;
@@ -49,9 +51,11 @@ public class ChatListActivity extends AppCompatActivity {
         // ✅ 채팅방 클릭 시 이동
         chatListView.setOnItemClickListener((AdapterView<?> parent, android.view.View view, int position, long id) -> {
             ChatRoom selectedChat = chatRooms.get(position);
-            Intent intent = new Intent(ChatListActivity.this, ChatRoomActivity.class);
+            Intent intent = new Intent(ChatListActivity.this, ChatActivity.class); // ✅ 수정!
             intent.putExtra("userName", selectedChat.getOtherUserName());
             intent.putExtra("roomId", selectedChat.getRoomId());
+            intent.putExtra("userId", userId);
+            intent.putExtra("bookId", selectedChat.getBookId());
             startActivity(intent);
         });
 

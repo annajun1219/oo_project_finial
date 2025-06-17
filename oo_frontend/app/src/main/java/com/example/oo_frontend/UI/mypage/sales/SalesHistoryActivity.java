@@ -43,7 +43,7 @@ public class SalesHistoryActivity extends AppCompatActivity {
         LinearLayout layoutStatusButtons = findViewById(R.id.layout_status_buttons);
 
         // ✅ 사용자 userId 가져오기 (SharedPreferences)
-        SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         userId = prefs.getInt("userId", -1);
         if (userId == -1) {
             Toast.makeText(this, "userId가 없습니다. 다시 로그인 해주세요.", Toast.LENGTH_SHORT).show();

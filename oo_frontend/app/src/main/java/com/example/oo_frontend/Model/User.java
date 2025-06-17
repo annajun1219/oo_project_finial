@@ -22,6 +22,10 @@ public class User {
         this.rating = rating;
     }
 
+    public User(int userId) {
+        this.userId = userId;
+    }
+
     // Getter & Setter
     public int getUserId() {
         return userId;

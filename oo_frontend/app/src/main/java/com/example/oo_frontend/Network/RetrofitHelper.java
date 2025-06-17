@@ -1,10 +1,15 @@
 package com.example.oo_frontend.Network;
 
+import static com.example.oo_frontend.Network.RetrofitClient.getClient;
+
 import android.content.Context;
 import android.widget.Toast;
 
+import com.example.oo_frontend.Model.BookRegisterRequest;
+import com.example.oo_frontend.Model.BookRegisterResponse;
 import com.example.oo_frontend.Model.Login;
 import com.example.oo_frontend.Model.MyPage;
+import com.example.oo_frontend.Model.ScheduleDto;
 import com.example.oo_frontend.Model.Signup;
 import com.example.oo_frontend.Model.SaleItem;
 import com.example.oo_frontend.Model.PurchaseItem;
@@ -48,7 +53,7 @@ public class RetrofitHelper {
 
     public static RetrofitService getApiService() {
         if (apiService == null) {
-            apiService = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
+            apiService = getClient().create(RetrofitService.class);
         }
         return apiService;
     }
@@ -153,10 +158,10 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 시간표 업로드
-    public static void uploadSchedule(Context context, int userId, List<String> scheduleSummary, final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
-        RetrofitService apiService = getApiService();
+    public static void uploadScheduleItem(Context context, ScheduleDto dto, final ApiCallback<Void> callback) {
+        RetrofitService api = getApiService();
 
-        apiService.uploadSchedule(userId, scheduleSummary).enqueue(new Callback<Void>() {
+        api.createSchedule(dto).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -175,24 +180,39 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 판매 내역 조회
-    public static void getSales(Context context, int userId, final com.example.oo_frontend.Network.ApiCallback<List<SaleItem>> callback) {
+    public static void getSales(Context context, int userId, final ApiCallback<List<SaleItem>> callback) {
         RetrofitService api = getApiService();
-        api.getSales(userId).enqueue(new Callback<List<SaleItem>>() {
+
+        Log.d("판매내역 요청", "요청 보냄 - userId: " + userId);
+
+        api.getSaleHistory(userId, null).enqueue(new Callback<List<SaleItem>>() {
             @Override
             public void onResponse(Call<List<SaleItem>> call, Response<List<SaleItem>> response) {
+                Log.d("판매내역 응답", "응답 코드: " + response.code());
+
                 if (response.isSuccessful()) {
+                    Log.d("판매내역 성공", "데이터 수: " + response.body().size());
                     callback.onSuccess(response.body());
                 } else {
-                    callback.onFailure("판매내역 조회 실패");
+                    try {
+                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "없음";
+                        Log.e("판매내역 실패", "에러 바디: " + errorBody);
+                    } catch (Exception e) {
+                        Log.e("판매내역 실패", "에러 바디 읽기 실패: " + e.getMessage());
+                    }
+                    callback.onFailure("판매내역 조회 실패: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<SaleItem>> call, Throwable t) {
+                Log.e("판매내역 네트워크 오류", "오류 메시지: " + t.getMessage());
                 callback.onFailure("네트워크 오류: " + t.getMessage());
             }
         });
     }
+
+
 
     // ✅ 마이페이지 -> 판매 내역 -> 상태 변경
     public static void updateSaleStatus(Context context, int userId, int bookId, String status, final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
@@ -257,14 +277,19 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 찜목록 삭제
-    public static void deleteFavorite(Context context, int userId, int bookId, final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
+    public static void deleteFavorite(Context context, Long userId, Long bookId, final ApiCallback<String> callback) {
         RetrofitService api = getApiService();
 
-        api.deleteFavorite(userId, bookId).enqueue(new Callback<Void>() {
+        if (bookId == null || userId == null) {
+            callback.onFailure("userId 또는 bookId가 null입니다.");
+            return;
+        }
+
+        api.deleteFavorite(bookId, userId).enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    callback.onSuccess(null);
+                    callback.onSuccess("찜 삭제됨");
                     Toast.makeText(context, "찜이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     callback.onFailure("찜 삭제 실패: " + response.code());
@@ -272,11 +297,12 @@ public class RetrofitHelper {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 callback.onFailure("네트워크 오류: " + t.getMessage());
             }
         });
     }
+
 
     // ✅ 마이페이지 -> 리뷰 등록 ❗리뷰 등록은 안 하는데 걍 넣어놈
     public static void postReview(Context context, ReviewItem review, final com.example.oo_frontend.Network.ApiCallback<ReviewItem> callback) {
@@ -323,7 +349,7 @@ public class RetrofitHelper {
 
 
     public static void fetchMainPageRaw(Context context, int userId, final com.example.oo_frontend.Network.ApiCallback<JsonObject> callback) {
-        RetrofitService service = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
+        RetrofitService service = getClient().create(RetrofitService.class);
 
         service.getMainPageRaw(userId).enqueue(new Callback<JsonObject>() {
             @Override
@@ -343,7 +369,7 @@ public class RetrofitHelper {
     }
 
     public static void fetchAllBooks(Context context, final com.example.oo_frontend.Network.ApiCallback<List<Book>> callback) {
-        RetrofitService api = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
+        RetrofitService api = getClient().create(RetrofitService.class);
 
         api.getAllBooks().enqueue(new Callback<List<Book>>() {
             @Override
@@ -362,10 +388,10 @@ public class RetrofitHelper {
         });
     }
 
-    public static void fetchBookDetail(Context context, Long productId, final com.example.oo_frontend.Network.ApiCallback<Book> callback) {
-        RetrofitService api = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
+    public static void fetchBookDetail(Context context, Long productId, Long viewerId, final ApiCallback<Book> callback) {
+        RetrofitService api = getClient().create(RetrofitService.class);
 
-        api.getBookDetail(productId).enqueue(new Callback<Book>() {
+        api.getBookDetail(productId, viewerId).enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -381,6 +407,32 @@ public class RetrofitHelper {
             }
         });
     }
+
+
+    // 단과대별 교재 목록 가져오기
+    public static void fetchBooksByDepartment(Context context, String departmentName, final ApiCallback<List<Book>> callback) {
+        RetrofitService api = getApiService();
+        Call<List<Book>> call = api.getBooksByDepartment(departmentName);
+
+        call.enqueue(new Callback<List<Book>>() {
+            @Override
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure("응답 실패: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Book>> call, Throwable t) {
+                callback.onFailure("네트워크 오류: " + t.getMessage());
+            }
+        });
+    }
+
+
+
 
     public static File getFileFromUri(Context context, Uri uri) throws IOException {
         String fileName = null;
@@ -423,76 +475,13 @@ public class RetrofitHelper {
         return outputFile;
     }
 
-    public static void getBookDetail(Context context, long productId, com.example.oo_frontend.Network.ApiCallback<Book> callback) {
-        RetrofitService service = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
-        Call<Book> call = service.getBookDetail(productId);
+    public static void getBookDetail(Context context, long productId, long viewerId, ApiCallback<Book> callback) {
+        RetrofitService service = getClient().create(RetrofitService.class);
+        Call<Book> call = service.getBookDetail(productId, viewerId);  // 🔥 viewerId 추가
 
         call.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    callback.onSuccess(response.body());
-                } else {
-                    callback.onFailure("응답 실패");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                callback.onFailure("네트워크 오류: " + t.getMessage());
-            }
-        });
-    }
-
-    // ✅ 교재 등록 (POST /api/books)
-    public static void registerBook(Context context, File imageFile, String title, String professor,
-                                    int officialPrice, int price, String description, String category, long sellerId,
-                                    final com.example.oo_frontend.Network.ApiCallback<Book> callback) {
-
-        RetrofitService service = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
-
-        // 이미지 파일 -> MultipartBody.Part
-        RequestBody reqImage = RequestBody.create(MediaType.parse("image/*"), imageFile);
-        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", imageFile.getName(), reqImage);
-
-        // 텍스트 필드 -> RequestBody
-        RequestBody titlePart = RequestBody.create(MediaType.parse("text/plain"), title);
-        RequestBody professorPart = RequestBody.create(MediaType.parse("text/plain"), professor);
-        RequestBody officialPricePart = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(officialPrice));
-        RequestBody pricePart = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(price));
-        RequestBody descriptionPart = RequestBody.create(MediaType.parse("text/plain"), description);
-        RequestBody categoryPart = RequestBody.create(MediaType.parse("text/plain"), category);
-        RequestBody sellerIdPart = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(sellerId));
-
-        Call<Book> call = service.registerBook(
-                imagePart, titlePart, professorPart, officialPricePart,
-                pricePart, descriptionPart, categoryPart, sellerIdPart
-        );
-
-        call.enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(Call<Book> call, Response<Book> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    callback.onSuccess(response.body());
-                } else {
-                    callback.onFailure("서버 응답 오류: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                callback.onFailure("네트워크 실패: " + t.getMessage());
-            }
-        });
-    }
-
-    public static void fetchRecommendations(Context context, int userId, final com.example.oo_frontend.Network.ApiCallback<List<Recommendation>> callback) {
-        RetrofitService service = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
-        Call<List<Recommendation>> call = service.getBySchedule(userId);
-
-        call.enqueue(new Callback<List<Recommendation>>() {
-            @Override
-            public void onResponse(Call<List<Recommendation>> call, Response<List<Recommendation>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     callback.onSuccess(response.body());
                 } else {
@@ -501,15 +490,148 @@ public class RetrofitHelper {
             }
 
             @Override
-            public void onFailure(Call<List<Recommendation>> call, Throwable t) {
+            public void onFailure(Call<Book> call, Throwable t) {
                 callback.onFailure("네트워크 오류: " + t.getMessage());
             }
         });
     }
 
-    public static void fetchChatRooms(Context context, final com.example.oo_frontend.Network.ApiCallback<List<ChatRoom>> callback) {
-        RetrofitService service = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
-        Call<List<ChatRoom>> call = service.getChatRoomList();
+
+    //교재시세파악
+    public static void getAveragePrice(Context context, String title, ApiCallback<Double> callback) {
+        RetrofitService service = getClient().create(RetrofitService.class);
+        Call<Double> call = service.getAveragePrice(title);
+
+        call.enqueue(new Callback<Double>() {
+            @Override
+            public void onResponse(Call<Double> call, Response<Double> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure("응답 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Double> call, Throwable t) {
+                callback.onFailure("네트워크 오류: " + t.getMessage());
+            }
+        });
+    }
+
+
+    // ✅ 교재 등록 (POST /api/books/register)
+    public static void registerBook(Context context, String title, String professor,
+                                    int officialPrice, int price, String description,
+                                    String category, long sellerId, String imageUrl,
+                                    final ApiCallback<BookRegisterResponse> callback) {
+
+        RetrofitService service = getClient().create(RetrofitService.class);
+
+        BookRegisterRequest request = new BookRegisterRequest();
+        request.setTitle(title);
+        request.setProfessorName(professor);
+        request.setOfficialPrice(officialPrice);
+        request.setPrice(price);
+        request.setDescription(description);
+        request.setCategory(category);
+        request.setSellerId(sellerId);
+        request.setImageUrl(imageUrl);  // ✅ URL 직접 세팅
+
+        Call<BookRegisterResponse> call = service.registerBook(request);
+
+        call.enqueue(new Callback<BookRegisterResponse>() {
+            @Override
+            public void onResponse(Call<BookRegisterResponse> call, Response<BookRegisterResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure("서버 응답 오류: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookRegisterResponse> call, Throwable t) {
+                callback.onFailure("네트워크 실패: " + t.getMessage());
+            }
+        });
+    }
+
+
+    public static void fetchRecommendations(Context context, Long userId, final ApiCallback<List<Book>> callback) {
+        RetrofitService service = getClient().create(RetrofitService.class);
+        Call<List<Book>> call = service.getBySchedule(userId);
+
+        call.enqueue(new Callback<List<Book>>() {
+            @Override
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure("응답 실패: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Book>> call, Throwable t) {
+                callback.onFailure("네트워크 오류: " + t.getMessage());
+            }
+        });
+    }
+
+
+
+    // ✅ 채팅방 목록 불러오기
+
+
+    // ✅ 채팅 메시지 목록 불러오기
+    // ✅ 채팅 메시지 목록 불러오기
+    public static void fetchChatMessages(Context context, Long roomId, Long userId,
+                                         ApiCallback<List<ChatMessage>> callback) {
+        RetrofitService service = getClient().create(RetrofitService.class);
+        service.getChatMessages(roomId, userId).enqueue(new Callback<List<ChatMessage>>() {
+            @Override
+            public void onResponse(Call<List<ChatMessage>> call, Response<List<ChatMessage>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure("조회 실패: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ChatMessage>> call, Throwable t) {
+                callback.onFailure("네트워크 오류: " + t.getMessage());
+            }
+        });
+    }
+
+    // ✅ 채팅방 단일 조회 or 생성
+    public static void fetchChatRoom(Context context, Long userId, Long bookId, final ApiCallback<ChatRoom> callback) {
+        RetrofitService service = getClient().create(RetrofitService.class);
+
+        Call<ChatRoom> call = service.getChatRoomList(userId, bookId);
+        call.enqueue(new Callback<ChatRoom>() {
+            @Override
+            public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure("응답 실패: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChatRoom> call, Throwable t) {
+                callback.onFailure("네트워크 오류: " + t.getMessage());
+            }
+        });
+    }
+
+    public static void fetchChatRooms(Context context, Long userId, final ApiCallback<List<ChatRoom>> callback) {
+        RetrofitService service = RetrofitClient.getClient().create(RetrofitService.class);
+
+        Call<List<ChatRoom>> call = service.getAllChatRooms(userId);  // @GET /api/chatrooms
 
         call.enqueue(new Callback<List<ChatRoom>>() {
             @Override
@@ -528,31 +650,12 @@ public class RetrofitHelper {
         });
     }
 
-    // ✅ 채팅 메시지 목록 불러오기
-    public static void fetchChatMessages(Context context, String roomId, String userId,
-                                         final com.example.oo_frontend.Network.ApiCallback<List<ChatMessage>> callback) {
-        RetrofitService service = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
-        service.getChatMessages(roomId, userId).enqueue(new Callback<List<ChatMessage>>() {
-            @Override
-            public void onResponse(Call<List<ChatMessage>> call, Response<List<ChatMessage>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    callback.onSuccess(response.body());
-                } else {
-                    callback.onFailure("조회 실패: " + response.code());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<ChatMessage>> call, Throwable t) {
-                callback.onFailure("네트워크 오류: " + t.getMessage());
-            }
-        });
-    }
 
-    // ✅ 채팅 메시지 전송
-    public static void sendChatMessage(Context context, String userId, String roomId, String messageText,
-                                       final com.example.oo_frontend.Network.ApiCallback<Void> callback) {
-        RetrofitService service = com.example.oo_frontend.Network.RetrofitClient.getClient().create(RetrofitService.class);
+    // ✅ 채팅 메시지 전송 (수정됨)
+    public static void sendChatMessage(Context context, Long userId, Long roomId, String messageText,
+                                       final ApiCallback<Void> callback) {
+        RetrofitService service = getClient().create(RetrofitService.class);
 
         Map<String, String> body = new HashMap<>();
         body.put("message", messageText);
@@ -573,6 +676,7 @@ public class RetrofitHelper {
             }
         });
     }
+
 
 
 

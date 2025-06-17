@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="300dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_margin="24dp"
     android:background="@drawable/card_background_rounded">
 
@@ -39,7 +39,6 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/rounded_corner_button"
         android:contentDescription="다음으로"
-        android:scaleType="centerInside"
         android:text="+"
         android:textColor="#e3ebb7"
         android:textSize="50dp" />

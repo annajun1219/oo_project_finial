@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         this.context = context;
     }
 
+    public void updateBooks(List<Book> newList) {
+        originalList.clear();
+        originalList.addAll(newList);
+
+        filteredList.clear();
+        filteredList.addAll(newList);
+
+        notifyDataSetChanged();
+    }
     // 필터 함수
     public void filter(String keyword, boolean byTitle) {
         filteredList.clear();
@@ -65,20 +75,32 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.originalPrice.setText("정가 " + book.getOfficialPrice() + "원");
 
         String meta = "시세 " + book.getAverageUsedPrice() + "원 · " + book.getProfessorName() + " · " + book.getCategory();
-        holder.metaInfo.setText(meta);
+        String professor = book.getProfessorName() != null ? book.getProfessorName() : "교수명 없음";
+        String category = book.getCategory() != null ? book.getCategory() : "카테고리 없음";
+        String meta_search = "교수: " + professor + " · " + category;
+
+        holder.metaInfo.setText(meta_search);
+
+        String imageUrl = book.getImageUrl();
+
 
         // 이미지 로딩
         Glide.with(context)
-                .load(book.getImageUrl())
+                .load(imageUrl)
                 .placeholder(R.drawable.book_sample1)
                 .error(R.drawable.book_sample1)
                 .into(holder.image);
 
         // 🔁 클릭 시 상세페이지로 이동
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, BookDetailActivity.class);
-            intent.putExtra("productId", book.getProductId());  // ✅ 핵심 변경
-            context.startActivity(intent);
+            Long productId = book.getProductId();
+            if (productId != null) {
+                Intent intent = new Intent(context, BookDetailActivity.class);
+                intent.putExtra("productId", productId);
+                context.startActivity(intent);
+            } else {
+                Toast.makeText(context, "교재 ID가 없습니다.", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

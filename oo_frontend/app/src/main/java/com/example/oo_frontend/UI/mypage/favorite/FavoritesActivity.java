@@ -2,6 +2,7 @@ package com.example.oo_frontend.UI.mypage.favorite;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,9 +40,11 @@ public class FavoritesActivity extends AppCompatActivity {
     }
 
     private void loadFavoriteListFromServer() {
-        SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("userId", -1);
         if (userId == -1) return;
+
+        Log.d("찜목록", "찜목록 불러오기 시작. userId: " + userId); // 로그 추가
 
         RetrofitHelper.getFavorites(this, userId, new ApiCallback<List<FavoriteItem>>() {
             @Override

@@ -1,27 +1,31 @@
 package com.example.oo_frontend.UI.main.recommendation;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.oo_frontend.Model.Book;
 import com.example.oo_frontend.Model.Recommendation;
 import com.example.oo_frontend.R;
+import com.example.oo_frontend.UI.main.book.BookDetailActivity;
 
 import java.util.List;
 
 public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter.ViewHolder> {
 
-    private List<Recommendation> recommendations;
-    private ViewPager2 viewPager;
+    private List<Book> books;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView subjectView, professorView;
-        ImageButton nextBtn;
+        Button nextBtn;
 
         public ViewHolder(View view) {
             super(view);
@@ -31,9 +35,8 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
         }
     }
 
-    public RecommendationAdapter(List<Recommendation> data, ViewPager2 viewPager) {
-        this.recommendations = data;
-        this.viewPager = viewPager;
+    public RecommendationAdapter(List<Book> data) {
+        this.books = data;
     }
 
     @Override
@@ -45,13 +48,20 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Recommendation item = recommendations.get(position);
-        holder.subjectView.setText("과목: " + item.getSubjectName());
-        holder.professorView.setText("교수: " + item.getProfessor());
+        Book item = books.get(position);
+        holder.subjectView.setText(item.getTitle());
+        holder.professorView.setText(item.getProfessorName());
+
+        holder.nextBtn.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, BookDetailActivity.class);
+            intent.putExtra("productId", item.getProductId());
+            context.startActivity(intent);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return recommendations.size();
+        return books.size();
     }
 }
