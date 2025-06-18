@@ -6,6 +6,7 @@ import com.example.oo_frontend.Model.ScheduleDto;
 import com.example.oo_frontend.Model.SearchResultDto;
 import com.example.oo_frontend.Model.Signup;
 import com.example.oo_frontend.Model.Login;
+import com.example.oo_frontend.Model.StartChatRequestDto;
 import com.example.oo_frontend.Model.User;
 import com.example.oo_frontend.Model.MyPage;
 import com.example.oo_frontend.Model.SaleItem;
@@ -90,6 +91,12 @@ public interface RetrofitService {
             @Query("buyerId") Long buyerId
     );
 
+    @PATCH("/api/sales/books/{bookId}/status")
+    Call<Void> updateBookStatus(
+            @Path("bookId") Long bookId,
+            @Query("status") String status
+    );
+
 
 
     // ✅ 마이페이지 -> 구매내역 조회
@@ -171,11 +178,10 @@ public interface RetrofitService {
 
 
 
-    @POST("/api/chatrooms")
-    Call<ChatRoom> getChatRoomList(
-            @Query("userId") Long userId,
-            @Query("bookId") Long bookId
-    );
+    // ✅ 채팅방 생성 (문의하기 버튼 → 채팅 시작)
+    @POST("/api/chatrooms/start")
+    Call<ChatRoom> startChatRoom(@Body StartChatRequestDto requestDto);
+
 
     @GET("/api/chatrooms")
     Call<List<ChatRoom>> getAllChatRooms(@Header("userId") Long userId);

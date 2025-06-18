@@ -18,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.example.oo_frontend.Model.Book;
 import com.example.oo_frontend.Model.ChatRoom;
+import com.example.oo_frontend.Model.StartChatRequestDto;
 import com.example.oo_frontend.Network.ApiCallback;
 import com.example.oo_frontend.Network.RetrofitClient;
 import com.example.oo_frontend.Network.RetrofitHelper;
@@ -253,8 +254,9 @@ public class BookDetailActivity extends AppCompatActivity {
 
 
             inquiryButton.setOnClickListener(v -> {
+                StartChatRequestDto requestDto = new StartChatRequestDto(userId, book.getSeller().getSellerId(), book.getProductId());
 
-                retrofitService.getChatRoomList(userId, book.getProductId()).enqueue(new Callback<ChatRoom>() {
+                retrofitService.startChatRoom(requestDto).enqueue(new Callback<ChatRoom>() {
                     @Override
                     public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
                         if (response.isSuccessful() && response.body() != null) {
@@ -269,16 +271,17 @@ public class BookDetailActivity extends AppCompatActivity {
                             chatIntent.putExtra("bookImageUrl", book.getImageUrl());
                             startActivity(chatIntent);
                         } else {
-                            Toast.makeText(BookDetailActivity.this, "채팅방 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BookDetailActivity.this, "채팅방을 시작할 수 없습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ChatRoom> call, Throwable t) {
-                        Toast.makeText(BookDetailActivity.this, "채팅 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BookDetailActivity.this, "네트워크 오류로 채팅 시작 실패", Toast.LENGTH_SHORT).show();
                     }
                 });
             });
+
 
 
 

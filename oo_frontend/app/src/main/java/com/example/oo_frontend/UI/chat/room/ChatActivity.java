@@ -66,13 +66,18 @@ public class ChatActivity extends AppCompatActivity {
 
         // ✅ Intent 데이터 받기
 
-        /*
+
+        // 🔽 이 주석 해제해서 사용
         Intent intent = getIntent();
         String sellerName = intent.getStringExtra("sellerName");
         String bookTitle = intent.getStringExtra("bookTitle");
         String bookPrice = intent.getStringExtra("bookPrice");
+        String imageUrl = intent.getStringExtra("bookImageUrl");
 
-        String imageUrl = getIntent().getStringExtra("bookImageUrl");
+// 🔽 UI 바인딩
+        chatRoomTitle.setText(sellerName + "님과의 채팅");
+        bookTitleView.setText(bookTitle);
+        bookPriceView.setText(bookPrice + "원");
 
         if (imageUrl != null && !imageUrl.isEmpty()) {
             Glide.with(this)
@@ -84,12 +89,7 @@ public class ChatActivity extends AppCompatActivity {
             bookImage.setImageResource(R.drawable.ic_book_placeholder);
         }
 
-        // ✅ 데이터 바인딩
-        chatRoomTitle.setText(sellerName + "님과의 채팅");
-        bookTitleView.setText(bookTitle);
-        bookPriceView.setText(bookPrice + "원");
 
-        */
 
 
         // ✅ Retrofit 초기화

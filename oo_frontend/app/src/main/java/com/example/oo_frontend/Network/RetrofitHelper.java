@@ -43,6 +43,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+import com.example.oo_frontend.Model.StartChatRequestDto;
 import com.google.gson.JsonObject;
 
 import android.util.Log;
@@ -181,37 +182,31 @@ public class RetrofitHelper {
     }
 
     // ✅ 마이페이지 -> 판매 내역 조회
-    public static void getSales(Context context, Long userId, final ApiCallback<List<SaleItem>> callback) {
+    public static void getSales(Context context, Long userId, String status, final ApiCallback<List<SaleItem>> callback) {
         RetrofitService api = getApiService();
 
-        Log.d("판매내역 요청", "요청 보냄 - userId: " + userId);
+        Log.d("판매내역 요청", "요청 보냄 - userId: " + userId + ", status: " + status);
 
-        api.getSaleHistory(userId, null).enqueue(new Callback<List<SaleItem>>() {
+        api.getSaleHistory(userId, status).enqueue(new Callback<List<SaleItem>>() {
             @Override
             public void onResponse(Call<List<SaleItem>> call, Response<List<SaleItem>> response) {
                 Log.d("판매내역 응답", "응답 코드: " + response.code());
 
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body() != null) {
                     Log.d("판매내역 성공", "데이터 수: " + response.body().size());
                     callback.onSuccess(response.body());
                 } else {
-                    try {
-                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "없음";
-                        Log.e("판매내역 실패", "에러 바디: " + errorBody);
-                    } catch (Exception e) {
-                        Log.e("판매내역 실패", "에러 바디 읽기 실패: " + e.getMessage());
-                    }
                     callback.onFailure("판매내역 조회 실패: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<SaleItem>> call, Throwable t) {
-                Log.e("판매내역 네트워크 오류", "오류 메시지: " + t.getMessage());
                 callback.onFailure("네트워크 오류: " + t.getMessage());
             }
         });
     }
+
 
 
 
@@ -236,6 +231,29 @@ public class RetrofitHelper {
             }
         });
     }
+
+    // ✅ 책의 상태만 직접 바꾸는 메서드
+    public static void updateBookStatus(Context context, long bookId, String status, ApiCallback<Void> callback) {
+        RetrofitService api = getClient().create(RetrofitService.class);
+        Call<Void> call = api.updateBookStatus(bookId, status);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(null);
+                } else {
+                    callback.onFailure("책 상태 변경 실패: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onFailure("네트워크 오류: " + t.getMessage());
+            }
+        });
+    }
+
 
     public static void createTransaction(Context context, Long bookId, Long sellerId, Long buyerId, ApiCallback<Void> callback) {
         RetrofitService service = getClient().create(RetrofitService.class);
@@ -653,18 +671,18 @@ public class RetrofitHelper {
         });
     }
 
-    // ✅ 채팅방 단일 조회 or 생성
-    public static void fetchChatRoom(Context context, Long userId, Long bookId, final ApiCallback<ChatRoom> callback) {
-        RetrofitService service = getClient().create(RetrofitService.class);
+    public static void startChatRoom(Context context, Long buyerId, Long sellerId, Long bookId,
+                                     final ApiCallback<ChatRoom> callback) {
+        RetrofitService api = getApiService();
+        StartChatRequestDto dto = new StartChatRequestDto(buyerId, sellerId, bookId);
 
-        Call<ChatRoom> call = service.getChatRoomList(userId, bookId);
-        call.enqueue(new Callback<ChatRoom>() {
+        api.startChatRoom(dto).enqueue(new Callback<ChatRoom>() {
             @Override
             public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     callback.onSuccess(response.body());
                 } else {
-                    callback.onFailure("응답 실패: " + response.code());
+                    callback.onFailure("채팅방 생성 실패: " + response.code());
                 }
             }
 
@@ -674,6 +692,8 @@ public class RetrofitHelper {
             }
         });
     }
+
+
 
     public static void fetchChatRooms(Context context, Long userId, final ApiCallback<List<ChatRoom>> callback) {
         RetrofitService service = RetrofitClient.getClient().create(RetrofitService.class);
