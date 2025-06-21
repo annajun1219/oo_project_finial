@@ -2,6 +2,7 @@ package com.example.oo_frontend.UI.main.book;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,12 +69,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
+
         Book book = filteredList.get(position);
+
+        Log.d("어댑터", "교재 제목: " + book.getTitle());
 
         holder.title.setText(book.getTitle());
         holder.salePrice.setText(book.getPrice() + "원");
         holder.originalPrice.setText("정가 " + book.getOfficialPrice() + "원");
-
         String meta = "시세 " + book.getAverageUsedPrice() + "원 · " + book.getProfessorName() + " · " + book.getCategory();
         String professor = book.getProfessorName() != null ? book.getProfessorName() : "교수명 없음";
         String category = book.getCategory() != null ? book.getCategory() : "카테고리 없음";
@@ -83,10 +86,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
         String imageUrl = book.getImageUrl();
 
-
         // 이미지 로딩
         Glide.with(context)
-                .load(imageUrl)
+                .load(book.getImageUrl())
                 .placeholder(R.drawable.book_sample1)
                 .error(R.drawable.book_sample1)
                 .into(holder.image);

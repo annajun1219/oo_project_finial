@@ -243,7 +243,7 @@ public class BookDetailActivity extends AppCompatActivity {
                         public void onFailure(Call<String> call, Throwable t) {
                             // 네트워크 오류 발생 시 로그
                             Log.e("찜응답", "서버 오류: " + t.getMessage());
-                            Toast.makeText(BookDetailActivity.this, "서버 오류", Toast.LENGTH_SHORT).show();
+
                         }
                     });
                 }

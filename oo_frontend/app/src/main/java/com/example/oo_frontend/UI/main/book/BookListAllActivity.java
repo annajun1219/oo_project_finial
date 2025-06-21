@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.example.oo_frontend.Model.SearchResultDto;
 import com.example.oo_frontend.Network.RetrofitHelper;
 import com.example.oo_frontend.Network.ApiCallback;
 
@@ -239,4 +237,3 @@ public class BookListAllActivity extends AppCompatActivity {
         prefs.edit().putStringSet(PREF_KEY, newSet).apply();
     }
 }
-
